@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Éditeur - Hamza Boulahia</title>
+    <link rel="stylesheet" href="Resume.css">
+</head>
+
+<body>
+    <button class="toggle-config" onclick="toggleConfig()">⚙️ Palette</button>
+
+    <div class="color-config" id="colorConfig" style="display:none;">
+        <h3>Configuration des couleurs</h3>
+
+        <div class="color-item">
+            <label>Couleur principale:</label>
+            <input type="color" id="primaryColor" value="#3498db" onchange="updateColors()">
+        </div>
+
+        <div class="color-item">
+            <label>Couleur secondaire:</label>
+            <input type="color" id="secondaryColor" value="#2c3e50" onchange="updateColors()">
+        </div>
+
+        <div class="color-item">
+            <label>Couleur d'accent:</label>
+            <input type="color" id="accentColor" value="#4a5f7f" onchange="updateColors()">
+        </div>
+
+        <div class="color-item">
+            <label>Arrière-plan:</label>
+            <input type="color" id="backgroundColor" value="#ffffff" onchange="updateColors()">
+        </div>
+
+        <div class="color-item">
+            <label>Arrière-plan sidebar:</label>
+            <input type="color" id="sidebarBg" value="#fafafa" onchange="updateColors()">
+        </div>
+
+        <div class="color-item">
+            <label>Couleur du texte:</label>
+            <input type="color" id="textColor" value="#444444" onchange="updateColors()">
+        </div>
+
+        <div class="color-presets">
+            <button class="preset-btn" style="background: #3498db;" onclick="applyPreset('blue')">Bleu</button>
+            <button class="preset-btn" style="background: #27ae60;" onclick="applyPreset('green')">Vert</button>
+            <button class="preset-btn" style="background: #e74c3c;" onclick="applyPreset('red')">Rouge</button>
+            <button class="preset-btn" style="background: #9b59b6;" onclick="applyPreset('purple')">Violet</button>
+            <button class="preset-btn" style="background: #34495e;" onclick="applyPreset('dark')">Sombre</button>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <button class="action-btn download-btn" onclick="downloadPDF()">
+            <span>📥</span> Télécharger PDF
+        </button>
+        <!-- SUPPRIMEZ CE BOUTON -->
+        <button class="action-btn reset-btn" onclick="resetCV()">
+            <span>🔄</span> Réinitialiser
+        </button>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="container">
+        <div class="header">
+            <div id="profileImageContainer">
+                <img id="profileImage" src="" alt="Profile" style="display:none;">
+                <input type="file" id="profileImagePicker" accept="image/*" style="display:none;">
+            </div>
+            <label for="profileImagePicker" id="profileImageLabel">+</label>
+            <h1 class="editable" data-id="name" onclick="editField(this)">Hamza Boulahia</h1>
+            <div class="subtitle editable" data-id="title" onclick="editField(this)">Ingénieur Full Stack - React |
+                React Native | Angular | Spring Boot</div>
+        </div>
+
+        <div class="main-content">
+            <div class="left-column">
+                <div class="section" data-section="intro">
+                    <div class="section-title">
+                        <span>À propos</span>
+                        <div class="section-controls">
+                            <span class="drag-handle" title="Déplacer">↕️</span>
+                            <button class="section-control-btn delete-btn" onclick="deleteSection('intro')"
+                                title="Supprimer">🗑️</button>
+                        </div>
+                    </div>
+                    <div class="intro-text editable" data-id="intro" onclick="editField(this)">
+                        Ingénieur Full Stack avec 4+ ans d'expérience en développement web et mobile. Senior en React,
+                        React Native, Angular et Spring Boot. Succès prouvé dans l'amélioration des performances (+30%)
+                        et la réduction des bugs (-25%). Spécialisé en solutions innovantes avec intégration IA/OCR pour
+                        optimiser les processus métiers.
+                    </div>
+                </div>
+
+                <div class="section" data-section="experience">
+                    <div class="section-title">
+                        <span>Expérience Professionnelle</span>
+                        <div class="section-controls">
+                            <span class="drag-handle" title="Déplacer">↕️</span>
+                            <button class="section-control-btn delete-btn" onclick="deleteSection('experience')"
+                                title="Supprimer">🗑️</button>
+                        </div>
+                    </div>
+
+                    <button class="add-btn" onclick="addExperience()">
+                        <span>+</span> Ajouter une expérience
+                    </button>
+
+                    <div class="experience-item draggable" data-id="experience-1">
+                        <button class="delete-btn" onclick="deleteItem('experience-1')" title="Supprimer">×</button>
+                        <div class="experience-header">
+                            <div class="experience-period editable" data-id="experience-1-period"
+                                onclick="editField(this)">Juillet 2022 – Présent</div>
+                            <div class="job-title editable" data-id="experience-1-title" onclick="editField(this)">
+                                Ingénieur Full Stack React & React Native</div>
+                            <div class="company editable" data-id="experience-1-company" onclick="editField(this)">
+                                Procheck Sagma, Casablanca</div>
+                        </div>
+                        <ul class="achievements">
+                            <li>
+                                <div class="editable" data-id="experience-1-achievement-1" onclick="editField(this)">
+                                    Réduction des bugs critiques de 25% via tests rigoureux et meilleures pratiques de
+                                    codage</div>
+                                <button class="delete-btn" onclick="deleteItem('experience-1-achievement-1')"
+                                    title="Supprimer">×</button>
+                            </li>
+                            <li>
+                                <div class="editable" data-id="experience-1-achievement-2" onclick="editField(this)">
+                                    Déploiement de solutions backend/frontend sur serveurs Linux et Windows</div>
+                                <button class="delete-btn" onclick="deleteItem('experience-1-achievement-2')"
+                                    title="Supprimer">×</button>
+                            </li>
+                            <li>
+                                <div class="editable" data-id="experience-1-achievement-3" onclick="editField(this)">
+                                    Optimisation workflows avec Docker et participation active aux réunions clients
+                                </div>
+                                <button class="delete-btn" onclick="deleteItem('experience-1-achievement-3')"
+                                    title="Supprimer">×</button>
+                            </li>
+                        </ul>
+                        <button class="add-btn" onclick="addAchievement('experience-1')">
+                            <span>+</span> Ajouter une réalisation
+                        </button>
+                        <div class="key-label">
+                            <span class="editable" data-id="experience-1-projects-title">
+                                Projets majeurs:
+                            </span>
+
+                            <button class="add-project-btn" onclick="addProject('experience-1')">
+                                + Ajouter un projet
+                            </button>
+                        </div>
+
+                        <ul class="project-list" id="experience-1-projects">
+                            <li>
+                                <div class="project-content">
+                                    <span class="project-name editable" data-id="experience-1-project-1-name"
+                                        onclick="editField(this)">
+                                        Capture App (Mobile/Web):
+                                    </span>
+                                    <span class="project-description editable"
+                                        data-id="experience-1-project-1-description" onclick="editField(this)">
+                                        Gestion chèques bancaires avec ScanBot et OCR IA
+                                        (React Native | Spring Boot)
+                                    </span>
+                                </div>
+
+                                <button class="delete-btn" onclick="deleteProject('experience-1-project-1')"
+                                    title="Supprimer">×</button>
+                            </li>
+                            <li>
+                                <div class="project-content">
+                                    <span class="project-name editable" data-id="experience-1-project-2-name"
+                                        onclick="editField(this)">
+                                        Almabat:
+                                    </span>
+
+                                    <span class="project-description editable"
+                                        data-id="experience-1-project-2-description" onclick="editField(this)">
+                                        Plateforme gestion tâches full-stack (React.js & Node.js)
+                                    </span>
+                                </div>
+
+                                <button class="delete-btn" onclick="deleteProject('experience-1-project-2')"
+                                    title="Supprimer">×</button>
+                            </li>
+
+                            <li>
+                                <div class="project-content">
+                                    <span class="project-name editable" data-id="experience-1-project-3-name"
+                                        onclick="editField(this)">
+                                        INWI Logistique:
+                                    </span>
+
+                                    <span class="project-description editable"
+                                        data-id="experience-1-project-3-description" onclick="editField(this)">
+                                        Traitement OCR contrats et génération automatisée
+                                    </span>
+                                </div>
+
+                                <button class="delete-btn" onclick="deleteProject('experience-1-project-3')"
+                                    title="Supprimer">×</button>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="experience-item draggable" data-id="experience-2">
+                        <button class="delete-btn" onclick="deleteItem('experience-2')" title="Supprimer">×</button>
+                        <div class="experience-header">
+                            <div class="experience-period editable" data-id="experience-2-period"
+                                onclick="editField(this)">Avril 2021 – Juillet 2022</div>
+                            <div class="job-title editable" data-id="experience-2-title" onclick="editField(this)">
+                                Développeur React & React Native & Node.js</div>
+                            <div class="company editable" data-id="experience-2-company" onclick="editField(this)">2WLS,
+                                Casablanca</div>
+                        </div>
+                        <ul class="achievements">
+                            <li>
+                                <div class="editable" data-id="experience-2-achievement-1" onclick="editField(this)">
+                                    Développement d'applications mobiles/web avec notifications OneSignal et animations
+                                    avancées</div>
+                                <button class="delete-btn" onclick="deleteItem('experience-2-achievement-1')"
+                                    title="Supprimer">×</button>
+                            </li>
+                            <li>
+                                <div class="editable" data-id="experience-2-achievement-2" onclick="editField(this)">
+                                    Refonte applications fidélité pour TotalEnergies et Shell, amélioration UX
+                                    significative</div>
+                                <button class="delete-btn" onclick="deleteItem('experience-2-achievement-2')"
+                                    title="Supprimer">×</button>
+                            </li>
+                            <li>
+                                <div class="editable" data-id="experience-2-achievement-3" onclick="editField(this)">
+                                    Amélioration efficacité opérationnelle de 40% avec solution Agrobource</div>
+                                <button class="delete-btn" onclick="deleteItem('experience-2-achievement-3')"
+                                    title="Supprimer">×</button>
+                            </li>
+                        </ul>
+                        <button class="add-btn" onclick="addAchievement('experience-2')">
+                            <span>+</span> Ajouter une réalisation
+                        </button>
+                        <div class="key-label">
+                            <span class="editable" data-id="experience-2-projects-title">
+                                Projets majeurs:
+                            </span>
+
+                            <button class="add-project-btn" onclick="addProject('experience-2')">
+                                + Ajouter un projet
+                            </button>
+                        </div>
+
+                        <ul class="project-list" id="experience-2-projects">
+                            <li>
+                                <div class="project-content">
+                                    <span class="project-name editable" data-id="experience-2-project-1-name"
+                                        onclick="editField(this)">
+                                        Tookeez:
+                                    </span>
+
+                                    <span class="project-description editable"
+                                        data-id="experience-2-project-1-description" onclick="editField(this)">
+                                        App mobile from scratch avec carte interactive et optimisations
+                                    </span>
+                                </div>
+
+                                <button class="delete-btn" onclick="deleteProject('experience-2-project-1')"
+                                    title="Supprimer">×</button>
+                            </li>
+                            <li>
+                                <div class="project-content">
+                                    <span class="project-name editable" data-id="experience-2-project-2-name"
+                                        onclick="editField(this)">
+                                        TotalEnergies & Shell:
+                                    </span>
+
+                                    <span class="project-description editable"
+                                        data-id="experience-2-project-2-description" onclick="editField(this)">
+                                        Refonte apps fidélité pour améliorer engagement
+                                    </span>
+                                </div>
+
+                                <button class="delete-btn" onclick="deleteProject('experience-2-project-2')"
+                                    title="Supprimer">×</button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item draggable" data-id="experience-3">
+                        <button class="delete-btn" onclick="deleteItem('experience-3')" title="Supprimer">×</button>
+                        <div class="experience-header">
+                            <div class="job-title editable" data-id="experience-3-title" onclick="editField(this)">
+                                Projets Freelance
+                            </div>
+                        </div>
+
+                        <!-- Ajoutez une div wrapper autour des projets -->
+                        <div class="projects-container">
+                            <ul class="project-list" id="experience-3-projects">
+
+                                <!-- Project 1 -->
+                                <li>
+                                    <div class="project-content">
+                                        <span class="project-name editable" data-id="experience-3-project-1-name"
+                                            onclick="editField(this)">
+                                            Service E-commerce:
+                                        </span>
+
+                                        <span class="project-description editable"
+                                            data-id="experience-3-project-1-description" onclick="editField(this)">
+                                            Plateforme complète (ReactJS | TypeScript | Spring Boot)
+                                        </span>
+                                    </div>
+
+                                    <button class="delete-btn" onclick="deleteProject('experience-3-project-1')"
+                                        title="Supprimer">×</button>
+                                </li>
+
+                                <!-- Project 2 -->
+                                <li>
+                                    <div class="project-content">
+                                        <span class="project-name editable" data-id="experience-3-project-2-name"
+                                            onclick="editField(this)">
+                                            Contrôle Signature:
+                                        </span>
+
+                                        <span class="project-description editable"
+                                            data-id="experience-3-project-2-description" onclick="editField(this)">
+                                            Système vérification signatures (React.js)
+                                        </span>
+                                    </div>
+
+                                    <button class="delete-btn" onclick="deleteProject('experience-3-project-2')"
+                                        title="Supprimer">×</button>
+                                </li>
+
+                            </ul>
+                        </div>
+
+
+                        <button class="add-btn" onclick="addFreelanceProject()">
+                            <span>+</span> Ajouter un projet freelance
+                        </button>
+                    </div>
+                </div>
+
+                <div class="section" data-section="education">
+                    <div class="section-title">
+                        <span>Formation</span>
+                        <div class="section-controls">
+                            <span class="drag-handle" title="Déplacer">↕️</span>
+                            <button class="section-control-btn delete-btn" onclick="deleteSection('education')"
+                                title="Supprimer">🗑️</button>
+                        </div>
+                    </div>
+
+                    <button class="add-btn" onclick="addEducation()">
+                        <span>+</span> Ajouter une formation
+                    </button>
+
+                    <div class="education-item draggable" data-id="education-1">
+                        <button class="delete-btn" onclick="deleteItem('education-1')" title="Supprimer">×</button>
+                        <div class="education-year editable" data-id="education-1-year" onclick="editField(this)">2023 –
+                            2025</div>
+                        <div class="degree editable" data-id="education-1-degree" onclick="editField(this)">Master II -
+                            Big Data & Cloud Computing</div>
+                        <div class="school editable" data-id="education-1-school" onclick="editField(this)">ENSET, Maroc
+                        </div>
+                    </div>
+
+                    <div class="education-item draggable" data-id="education-2">
+                        <button class="delete-btn" onclick="deleteItem('education-2')" title="Supprimer">×</button>
+                        <div class="education-year editable" data-id="education-2-year" onclick="editField(this)">2022
+                        </div>
+                        <div class="degree editable" data-id="education-2-degree" onclick="editField(this)">Licence en
+                            Ingénierie Logicielle</div>
+                        <div class="school editable" data-id="education-2-school" onclick="editField(this)">ESTEM, Maroc
+                        </div>
+                    </div>
+
+                    <div class="education-item draggable" data-id="education-3">
+                        <button class="delete-btn" onclick="deleteItem('education-3')" title="Supprimer">×</button>
+                        <div class="education-year editable" data-id="education-3-year" onclick="editField(this)">2019
+                        </div>
+                        <div class="degree editable" data-id="education-3-degree" onclick="editField(this)">Technicien
+                            Spécialisé - Développement Informatique</div>
+                        <div class="school editable" data-id="education-3-school" onclick="editField(this)">NTIC 2 Sidi
+                            Maarouf, Maroc</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="sidebar-section draggable" data-section="contact">
+                    <button class="delete-btn" onclick="deleteSection('contact')" title="Supprimer">×</button>
+                    <div class="sidebar-title">
+                        <span>Contact</span>
+                        <span class="drag-handle" title="Déplacer">↕️</span>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-item-content">
+                            <div class="contact-label">Localisation</div>
+                            <div class="contact-value editable" data-id="contact-location" onclick="editField(this)">
+                                Casablanca, Maroc</div>
+                        </div>
+                        <button class="delete-btn" onclick="deleteItem('contact-location')" title="Supprimer">×</button>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-item-content">
+                            <div class="contact-label">Téléphone</div>
+                            <div class="contact-value editable" data-id="contact-phone" onclick="editField(this)">+212
+                                659 676 148</div>
+                        </div>
+                        <button class="delete-btn" onclick="deleteItem('contact-phone')" title="Supprimer">×</button>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-item-content">
+                            <div class="contact-label">Email</div>
+                            <div class="contact-value editable" data-id="contact-email" onclick="editField(this)">
+                                hamzaboulahia.code@gmail.com</div>
+                        </div>
+                        <button class="delete-btn" onclick="deleteItem('contact-email')" title="Supprimer">×</button>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-item-content">
+                            <div class="contact-label">LinkedIn</div>
+                            <div class="contact-value editable" data-id="contact-linkedin" onclick="editField(this)">
+                                linkedin.com/in/boulahia-hamza</div>
+                        </div>
+                        <button class="delete-btn" onclick="deleteItem('contact-linkedin')" title="Supprimer">×</button>
+                    </div>
+
+                    <button class="add-btn" onclick="addContact()">
+                        <span>+</span> Ajouter un contact
+                    </button>
+                </div>
+
+                <div class="sidebar-section draggable" data-section="expertise">
+                    <button class="delete-btn" onclick="deleteSection('expertise')" title="Supprimer">×</button>
+                    <div class="sidebar-title">
+                        <span>Expertise</span>
+                        <span class="drag-handle" title="Déplacer">↕️</span>
+                    </div>
+                    <ul class="key-skills-list" id="expertise-list">
+                        <li>
+                            <div class="editable" data-id="expertise-1" onclick="editField(this)">Full Stack Development
+                            </div>
+                            <button class="delete-btn" onclick="deleteItem('expertise-1')" title="Supprimer">×</button>
+                        </li>
+                        <li>
+                            <div class="editable" data-id="expertise-2" onclick="editField(this)">Architecture
+                                Logicielle</div>
+                            <button class="delete-btn" onclick="deleteItem('expertise-2')" title="Supprimer">×</button>
+                        </li>
+                        <li>
+                            <div class="editable" data-id="expertise-3" onclick="editField(this)">Optimisation
+                                Performance</div>
+                            <button class="delete-btn" onclick="deleteItem('expertise-3')" title="Supprimer">×</button>
+                        </li>
+                        <li>
+                            <div class="editable" data-id="expertise-4" onclick="editField(this)">Intégration IA/OCR
+                            </div>
+                            <button class="delete-btn" onclick="deleteItem('expertise-4')" title="Supprimer">×</button>
+                        </li>
+                    </ul>
+                    <button class="add-btn" onclick="addExpertise()">
+                        <span>+</span> Ajouter une compétence
+                    </button>
+                </div>
+
+                <div class="sidebar-section draggable" data-section="technologies">
+                    <button class="delete-btn" onclick="deleteSection('technologies')" title="Supprimer">×</button>
+                    <div class="sidebar-title">
+                        <span>Technologies</span>
+                        <span class="drag-handle" title="Déplacer">↕️</span>
+                    </div>
+
+                    <div class="skills-category">
+                        <div class="skills-category-content">
+                            <div class="skill-label editable" data-id="tech-frontend-label" onclick="editField(this)">
+                                Frontend</div>
+                            <div class="skill-value editable" data-id="tech-frontend-value" onclick="editField(this)">
+                                ReactJS, Angular, Next.js</div>
+                        </div>
+                        <button class="delete-btn" onclick="deleteItem('tech-frontend-label')"
+                            title="Supprimer">×</button>
+                    </div>
+
+                    <div class="skills-category">
+                        <div class="skills-category-content">
+                            <div class="skill-label editable" data-id="tech-backend-label" onclick="editField(this)">
+                                Backend</div>
+                            <div class="skill-value editable" data-id="tech-backend-value" onclick="editField(this)">
+                                Node.js, Java Spring Boot</div>
+                        </div>
+                        <button class="delete-btn" onclick="deleteItem('tech-backend-label')"
+                            title="Supprimer">×</button>
+                    </div>
+
+                    <div class="skills-category">
+                        <div class="skills-category-content">
+                            <div class="skill-label editable" data-id="tech-mobile-label" onclick="editField(this)">
+                                Mobile</div>
+                            <div class="skill-value editable" data-id="tech-mobile-value" onclick="editField(this)">
+                                React Native, Expo</div>
+                        </div>
+                        <button class="delete-btn" onclick="deleteItem('tech-mobile-label')"
+                            title="Supprimer">×</button>
+                    </div>
+
+                    <button class="add-btn" onclick="addTechnology()">
+                        <span>+</span> Ajouter une catégorie
+                    </button>
+                </div>
+
+                <div class="sidebar-section draggable" data-section="languages">
+                    <button class="delete-btn" onclick="deleteSection('languages')" title="Supprimer">×</button>
+                    <div class="sidebar-title">
+                        <span>Langues</span>
+                        <span class="drag-handle" title="Déplacer">↕️</span>
+                    </div>
+                    <ul class="languages-list">
+                        <li data-id="language-1">
+                            <span class="editable" data-id="language-1-name" onclick="editField(this)">Arabe</span>
+                            <div class="lang-dots">
+                                <span class="dot filled" data-level="5"></span>
+                                <span class="dot filled" data-level="5"></span>
+                                <span class="dot filled" data-level="5"></span>
+                                <span class="dot filled" data-level="5"></span>
+                                <span class="dot filled" data-level="5"></span>
+                            </div>
+                            <button class="delete-btn" onclick="deleteItem('language-1')" title="Supprimer">×</button>
+                        </li>
+                        <li data-id="language-2">
+                            <span class="editable" data-id="language-2-name" onclick="editField(this)">Français</span>
+                            <div class="lang-dots">
+                                <span class="dot filled" data-level="4"></span>
+                                <span class="dot filled" data-level="4"></span>
+                                <span class="dot filled" data-level="4"></span>
+                                <span class="dot filled" data-level="4"></span>
+                                <span class="dot" data-level="4"></span>
+                            </div>
+                            <button class="delete-btn" onclick="deleteItem('language-2')" title="Supprimer">×</button>
+                        </li>
+                        <li data-id="language-3">
+                            <span class="editable" data-id="language-3-name" onclick="editField(this)">Anglais</span>
+                            <div class="lang-dots">
+                                <span class="dot filled" data-level="3"></span>
+                                <span class="dot filled" data-level="3"></span>
+                                <span class="dot filled" data-level="3"></span>
+                                <span class="dot" data-level="3"></span>
+                                <span class="dot" data-level="3"></span>
+                            </div>
+                            <button class="delete-btn" onclick="deleteItem('language-3')" title="Supprimer">×</button>
+                        </li>
+                    </ul>
+                    <button class="add-btn" onclick="addLanguage()">
+                        <span>+</span> Ajouter une langue
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="Resume.js"></script>
+</body>
+
+</html>
