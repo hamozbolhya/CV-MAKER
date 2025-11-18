@@ -55,14 +55,24 @@ function loadFromLocalStorage() {
         document.getElementById("textColor").value = cvData.colors.text;
         updateColors();
       }
-      if (cvData.profileImage) {
-        const img = document.getElementById("profileImage");
-        img.src = cvData.profileImage;
-        img.style.display = "block";
+      let profileSrc = cvData.profileImage || "";
+      const img = document.getElementById("profileImage");
+      const header = document.querySelector(".header");
+
+      if (img && header) {
+        if (profileSrc) {
+          img.src = profileSrc;
+          img.style.display = "block";
+          header.classList.add("has-profile-image");
+        } else {
+          img.src = "";
+          img.style.display = "none";
+          header.classList.remove("has-profile-image");
+        }
       }
 
       initEditableElements();
-      initDragAndDrop();
+      initProfileImage(); // 👈 IMPORTANT
 
       const date = new Date(cvData.timestamp);
       showToast(
@@ -90,7 +100,6 @@ function undo() {
     const previousState = undoStack.pop();
     document.querySelector(".container").innerHTML = previousState;
     initEditableElements();
-    initDragAndDrop();
     showToast("↶ Annulation", false, 1500);
   }
 }
@@ -101,7 +110,6 @@ function redo() {
     const nextState = redoStack.pop();
     document.querySelector(".container").innerHTML = nextState;
     initEditableElements();
-    initDragAndDrop();
     showToast("↷ Rétablissement", false, 1500);
   }
 }
@@ -241,14 +249,8 @@ function showToast(message, isError = false, duration = 3000) {
   }, duration);
 }
 
-// Initialize event listeners
 document.addEventListener("DOMContentLoaded", function () {
-  // Load saved CV if exists
-  if (localStorage.getItem("cvData")) {
-    if (confirm("Un CV sauvegardé a été trouvé. Voulez-vous le restaurer ?")) {
-      loadFromLocalStorage();
-    }
-  }
+  loadFromLocalStorage(); // <-- ADD THIS LINE HERE
 
   // Add event listeners to color inputs
   const colorInputs = document.querySelectorAll(
@@ -258,13 +260,8 @@ document.addEventListener("DOMContentLoaded", function () {
     input.addEventListener("input", updateColors);
   });
 
-  // Hide config panel by default
   document.getElementById("colorConfig").style.display = "none";
 
-  // Add click event listeners to all editable elements
-  initEditableElements();
-
-  // Add click event listeners to language dots
   const languageDots = document.querySelectorAll(".lang-dots .dot");
   languageDots.forEach((dot) => {
     dot.addEventListener("click", function () {
@@ -272,20 +269,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Initialize drag and drop
+  initEditableElements();
   initDragAndDrop();
-
-  // Add smooth scroll reveal animations
+  initProfileImage();
   addScrollAnimations();
-
-  // Show welcome tooltip
-  setTimeout(() => {
-    showToast(
-      "💡 Astuce: Cliquez sur n'importe quel texte pour l'éditer!",
-      false,
-      4000
-    );
-  }, 500);
 });
 
 // Smooth scroll reveal animations
@@ -342,18 +329,30 @@ function initEditableElements() {
 function handleEditClick(e) {
   e.stopPropagation();
 
-  // Si un autre élément est en cours d'édition, on le sauvegarde d'abord
-  if (currentlyEditing && currentlyEditing !== this) {
-    const input = currentlyEditing.querySelector("input, textarea");
-    if (input) saveEdit(currentlyEditing, input.value);
-  }
+  // Close ALL open editors safely
+  closeAllOpenEditors();
 
   startEditing(this);
 }
 
-// Fonction editField corrigée
-function editField(element) {
-  startEditing(element);
+function closeAllOpenEditors() {
+  const editors = document.querySelectorAll(".editing");
+
+  editors.forEach((el) => {
+    const input = el.querySelector("input, textarea");
+    if (input) {
+      const original = el.dataset.originalValue || input.value;
+      el.textContent = original;
+    }
+    el.classList.remove("editing");
+
+    if (el._clickAwayHandler) {
+      document.removeEventListener("click", el._clickAwayHandler);
+      delete el._clickAwayHandler;
+    }
+  });
+
+  currentlyEditing = null;
 }
 
 // Download PDF function
@@ -369,6 +368,8 @@ function startEditing(element) {
   saveState();
   currentlyEditing = element;
   const currentText = element.textContent.trim();
+
+  element.dataset.originalValue = currentText;
 
   let input;
   if (element.classList.contains("intro-text")) {
@@ -442,9 +443,6 @@ function startEditing(element) {
   setTimeout(() => {
     document.addEventListener("click", clickAwayHandler);
   }, 100);
-
-  // Stocker le handler pour pouvoir le supprimer si nécessaire
-  element._clickAwayHandler = clickAwayHandler;
 }
 
 function saveEdit(element, newValue) {
@@ -456,12 +454,6 @@ function saveEdit(element, newValue) {
   if (!trimmedValue && !element.classList.contains("intro-text")) {
     showToast("⚠️ Le champ ne peut pas être vide", true, 2000);
     return;
-  }
-
-  // Nettoyer l'écouteur d'événements click away
-  if (element._clickAwayHandler) {
-    document.removeEventListener("click", element._clickAwayHandler);
-    delete element._clickAwayHandler;
   }
 
   element.textContent = trimmedValue || newValue;
@@ -535,11 +527,6 @@ function deleteSection(sectionId) {
     saveState();
     const section = document.querySelector(`[data-section="${sectionId}"]`);
     if (section) {
-      // Check if we're deleting the currently editing element
-      if (currentlyEditing && section.contains(currentlyEditing)) {
-        currentlyEditing = null;
-      }
-
       section.style.transform = "scale(0.8)";
       section.style.opacity = "0";
       setTimeout(() => {
@@ -564,7 +551,6 @@ function deleteProject(projectId) {
         currentlyEditing = null;
       }
 
-      project.style.transform = "translateX(-20px)";
       project.style.opacity = "0";
       setTimeout(() => {
         project.remove();
@@ -683,8 +669,6 @@ function addExperience() {
   const newExperience = document.createElement("div");
   newExperience.className = "experience-item draggable";
   newExperience.setAttribute("data-id", `experience-${experienceCount}`);
-  newExperience.style.opacity = "0";
-  newExperience.style.transform = "translateY(20px)";
 
   newExperience.innerHTML = `
         <button class="delete-btn" onclick="deleteItem('experience-${experienceCount}')" title="Supprimer">×</button>
@@ -727,7 +711,6 @@ function addExperience() {
   }, 10);
 
   initEditableElements();
-  initDragAndDrop();
   scheduleAutoSave();
   showToast("✓ Expérience ajoutée", false, 2000);
 }
@@ -740,7 +723,6 @@ function addAchievement(experienceId) {
   const achievementCount = achievementsList.children.length + 1;
 
   const newAchievement = document.createElement("li");
-  newAchievement.style.opacity = "0";
   newAchievement.style.transform = "translateX(-10px)";
   newAchievement.innerHTML = `
         <div class="editable" data-id="${experienceId}-achievement-${achievementCount}">Nouvelle réalisation</div>
@@ -765,14 +747,30 @@ function addFreelanceProject() {
   const freelanceSection = document.querySelector("#experience-3-projects");
   const projectCount = freelanceSection.children.length + 1;
 
+  const projectId = `experience-3-project-${projectCount}`;
+
   const newProject = document.createElement("li");
   newProject.style.opacity = "0";
+
   newProject.innerHTML = `
-        <div class="project-content">
-            <span class="project-name">Nouveau projet:</span> Description
-        </div>
-        <button class="delete-btn" onclick="deleteProject('experience-3-project-${projectCount}')" title="Supprimer">×</button>
-    `;
+    <div class="project-content">
+
+      <span class="project-name editable"
+            data-id="${projectId}-name">
+        Nouveau projet:
+      </span>
+
+      <span class="project-description editable"
+            data-id="${projectId}-desc">
+        Description
+      </span>
+
+    </div>
+
+    <button class="delete-btn" 
+            onclick="deleteProject('${projectId}')" 
+            title="Supprimer">×</button>
+  `;
 
   freelanceSection.appendChild(newProject);
 
@@ -788,17 +786,30 @@ function addFreelanceProject() {
 
 function addProject(experienceId) {
   saveState();
+
   const projectList = document.getElementById(`${experienceId}-projects`);
   const projectCount = projectList.children.length + 1;
 
   const newProject = document.createElement("li");
   newProject.style.opacity = "0";
+
   newProject.innerHTML = `
-        <div class="project-content">
-            <span class="project-name">Nom du projet:</span> Description
-        </div>
-        <button class="delete-btn" onclick="deleteProject('${experienceId}-project-${projectCount}')" title="Supprimer">×</button>
-    `;
+    <div class="project-content">
+      <span class="project-name editable" 
+            data-id="${experienceId}-project-${projectCount}-name">
+        Nom du projet:
+      </span>
+
+      <span class="project-description editable"
+            data-id="${experienceId}-project-${projectCount}-description">
+        Description du projet
+      </span>
+    </div>
+
+    <button class="delete-btn" 
+            onclick="deleteProject('${experienceId}-project-${projectCount}')" 
+            title="Supprimer">×</button>
+  `;
 
   projectList.appendChild(newProject);
 
@@ -839,13 +850,11 @@ function addEducation() {
   );
 
   setTimeout(() => {
-    newEducation.style.transition = "opacity 0.4s ease, transform 0.4s ease";
     newEducation.style.opacity = "1";
     newEducation.style.transform = "translateY(0)";
   }, 10);
 
   initEditableElements();
-  initDragAndDrop();
   scheduleAutoSave();
   showToast("✓ Formation ajoutée", false, 2000);
 }
@@ -972,13 +981,6 @@ function addLanguage() {
 
   initEditableElements();
 
-  const newDots = newLanguage.querySelectorAll(".dot");
-  newDots.forEach((dot) => {
-    dot.addEventListener("click", function () {
-      toggleLanguageLevel(this);
-    });
-  });
-
   scheduleAutoSave();
   showToast("✓ Langue ajoutée", false, 1500);
 }
@@ -1028,7 +1030,6 @@ function initDragAndDrop() {
       .querySelectorAll(".drag-over")
       .forEach((el) => el.classList.remove("drag-over"));
     scheduleAutoSave();
-    showToast("↕️ Élément déplacé", false, 1500);
     return false;
   }
 
@@ -1089,410 +1090,112 @@ function toggleSearch() {
 }
 
 function searchInCV(query) {
-  clearSearch();
+  clearSearch(); // remove previous highlights
   if (!query || query.length < 2) return;
 
   const container = document.querySelector(".container");
   let matchCount = 0;
 
-  // Function to highlight text in a node
+  // Escape regex special characters so search works safely
+  function escapeRegex(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
+  const safeQuery = escapeRegex(query);
+  const regex = new RegExp(safeQuery, "gi");
+
+  // Highlight a specific text node (text only)
   function highlightTextNode(node) {
-    const parent = node.parentElement;
-
-    // Skip if in edit mode or in buttons
-    if (
-      !parent ||
-      parent.classList.contains("edit-input") ||
-      parent.classList.contains("edit-textarea") ||
-      parent.classList.contains("edit-btn") ||
-      parent.classList.contains("delete-btn") ||
-      parent.classList.contains("add-btn") ||
-      parent.classList.contains("section-control-btn")
-    ) {
-      return;
-    }
-
     const text = node.textContent;
-    const regex = new RegExp(`(${escapeRegex(query)})`, "gi");
+    const matches = text.match(regex);
+    if (!matches) return;
 
-    if (regex.test(text)) {
-      const newHTML = text.replace(regex, '<span class="highlight">$1</span>');
-      const span = document.createElement("span");
-      span.innerHTML = newHTML;
+    matchCount += matches.length;
 
-      // Count matches
-      matchCount += (text.match(regex) || []).length;
-
-      parent.replaceChild(span, node);
-    }
-  }
-
-  // Escape special regex characters
-  function escapeRegex(string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  }
-
-  // Search functionality
-  let searchActive = false;
-  function toggleSearch() {
-    searchActive = !searchActive;
-    const searchContainer = document.getElementById("searchContainer");
-    if (searchActive) {
-      searchContainer.classList.add("show");
-      document.getElementById("searchInput").focus();
-    } else {
-      searchContainer.classList.remove("show");
-      clearSearch();
-    }
-  }
-
-  function searchInCV(query) {
-    clearSearch();
-    if (!query) return;
-
-    const container = document.querySelector(".container");
-    const walker = document.createTreeWalker(
-      container,
-      NodeFilter.SHOW_TEXT,
-      null,
-      false
-    );
-    const nodes = [];
-
-    while (walker.nextNode()) {
-      if (
-        walker.currentNode.textContent
-          .toLowerCase()
-          .includes(query.toLowerCase())
-      ) {
-        nodes.push(walker.currentNode);
-      }
-    }
-
-    nodes.forEach((node) => {
-      const parent = node.parentElement;
-      if (
-        !parent.classList.contains("edit-input") &&
-        !parent.classList.contains("edit-textarea")
-      ) {
-        const text = node.textContent;
-        const regex = new RegExp(`(${query})`, "gi");
-        const newHTML = text.replace(
-          regex,
-          '<span class="highlight">$1</span>'
-        );
-
-        const span = document.createElement("span");
-        span.innerHTML = newHTML;
-        parent.replaceChild(span, node);
-      }
-    });
-
-    if (nodes.length > 0) {
-      const firstHighlight = document.querySelector(".highlight");
-      if (firstHighlight) {
-        firstHighlight.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-      showToast(`🔍 ${nodes.length} résultat(s) trouvé(s)`, false, 2000);
-    } else {
-      showToast("❌ Aucun résultat", true, 2000);
-    }
-  }
-
-  function clearSearch() {
-    document.querySelectorAll(".highlight").forEach((span) => {
-      const text = span.textContent;
-      const textNode = document.createTextNode(text);
-      span.parentNode.replaceChild(textNode, span);
-    });
-  }
-
-  function performSearch() {
-    const searchTerm = document.getElementById("searchInput").value.trim();
-    if (!searchTerm) {
-      clearSearch();
-      return;
-    }
-
-    const container = document.getElementById("markdownContent");
-    const escapedTerm = escapeRegex(searchTerm);
-    const regex = new RegExp(escapedTerm, "gi");
-    let matchCount = 0;
-
-    function highlightTextNode(textNode) {
-      const text = textNode.textContent;
-      const matches = [...text.matchAll(regex)];
-
-      if (matches.length === 0) return;
-
-      const fragment = document.createDocumentFragment();
-      let lastIndex = 0;
-
-      matches.forEach((match) => {
-        // Text before the match
-        if (match.index > lastIndex) {
-          fragment.appendChild(
-            document.createTextNode(text.substring(lastIndex, match.index))
-          );
-        }
-
-        // The matched text with highlight
-        const highlight = document.createElement("span");
-        highlight.className = "highlight";
-        highlight.textContent = match[0];
-        fragment.appendChild(highlight);
-        matchCount++;
-
-        lastIndex = match.index + match[0].length;
-      });
-
-      // Text after the last match
-      if (lastIndex < text.length) {
-        fragment.appendChild(
-          document.createTextNode(text.substring(lastIndex))
-        );
-      }
-
-      textNode.parentNode.replaceChild(fragment, textNode);
-    }
-
-    clearSearch();
-
-    const walker = document.createTreeWalker(
-      container,
-      NodeFilter.SHOW_TEXT,
-      {
-        acceptNode: function (node) {
-          // Skip empty text nodes and nodes in edit mode
-          if (!node.textContent.trim()) return NodeFilter.FILTER_REJECT;
-          return NodeFilter.FILTER_ACCEPT;
-        },
-      },
-      false
+    const span = document.createElement("span");
+    span.innerHTML = text.replace(
+      regex,
+      (m) => `<mark class="highlight">${m}</mark>`
     );
 
-    const nodes = [];
-    while (walker.nextNode()) {
-      nodes.push(walker.currentNode);
-    }
-
-    nodes.forEach(highlightTextNode);
-
-    if (matchCount > 0) {
-      const firstHighlight = document.querySelector(".highlight");
-      if (firstHighlight) {
-        firstHighlight.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-      showToast(`🔍 ${matchCount} résultat(s) trouvé(s)`, false, 2000);
-    } else {
-      showToast("❌ Aucun résultat", true, 2000);
-    }
+    node.replaceWith(span);
   }
 
-  function clearSearch() {
-    const highlights = document.querySelectorAll(".highlight");
-    highlights.forEach((span) => {
-      const parent = span.parentNode;
-      if (parent) {
-        const text = span.textContent;
-        const textNode = document.createTextNode(text);
-
-        // If the parent only contains highlights, replace them all at once
-        if (
-          parent.childNodes.length === 1 ||
-          parent.querySelectorAll(".highlight").length > 0
-        ) {
-          const fullText = parent.textContent;
-          parent.textContent = fullText;
-        }
+  // Recursive scan of nodes
+  function walk(node) {
+    node.childNodes.forEach((child) => {
+      if (child.nodeType === 3) {
+        highlightTextNode(child);
+      } else {
+        walk(child);
       }
     });
   }
 
-  // Additional keyboard shortcuts
-  document.addEventListener("keydown", (e) => {
-    // Prevent shortcuts when editing
-    const activeElement = document.activeElement;
-    const isEditing =
-      activeElement &&
-      (activeElement.tagName === "INPUT" ||
-        activeElement.tagName === "TEXTAREA" ||
-        activeElement.classList.contains("edit-input") ||
-        activeElement.classList.contains("edit-textarea"));
+  walk(container);
 
-    // ? = Show shortcuts (only if not editing)
-    if (e.key === "?" && !e.ctrlKey && !e.metaKey && !isEditing) {
-      e.preventDefault();
-      showShortcuts();
-    }
-
-    // Ctrl/Cmd + F = Search (only if not editing textarea)
-    if (
-      (e.ctrlKey || e.metaKey) &&
-      e.key === "f" &&
-      activeElement.tagName !== "TEXTAREA"
-    ) {
-      e.preventDefault();
-      toggleSearch();
-    }
-
-    // Escape = Close overlays or cancel edit
-    if (e.key === "Escape") {
-      if (
-        document.getElementById("shortcutsOverlay").classList.contains("show")
-      ) {
-        hideShortcuts();
-      } else if (searchActive) {
-        toggleSearch();
-      } else if (currentlyEditing) {
-        const input = currentlyEditing.querySelector("input, textarea");
-        if (input) {
-          const originalValue =
-            input.getAttribute("data-original") || input.value;
-          cancelEdit(currentlyEditing, originalValue);
-        }
-      }
-    }
-  });
-
-  // Progress indicator for actions
-  function showProgress() {
-    const progress = document.getElementById("progressIndicator");
-    progress.style.width = "0%";
-    progress.style.display = "block";
-
-    let width = 0;
-    const interval = setInterval(() => {
-      width += 10;
-      progress.style.width = width + "%";
-      if (width >= 100) {
-        clearInterval(interval);
-        setTimeout(() => {
-          progress.style.width = "0%";
-        }, 300);
-      }
-    }, 30);
+  // Show count
+  const counter = document.getElementById("searchCount");
+  if (counter) {
+    counter.textContent =
+      matchCount > 0 ? `${matchCount} résultats` : "Aucun résultat";
   }
-
-  // Click outside to close FAB menu
-  document.addEventListener("click", (e) => {
-    const fabMenu = document.getElementById("fabMenu");
-    if (!fabMenu.contains(e.target) && fabMenu.classList.contains("active")) {
-      fabMenu.classList.remove("active");
-    }
-  });
-
-  // Smooth scroll to top button
-  let scrollButton = null;
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 300) {
-      if (!scrollButton) {
-        scrollButton = document.createElement("button");
-        scrollButton.innerHTML = "↑";
-        scrollButton.style.cssText = `
-                position: fixed;
-                bottom: 120px;
-                right: 30px;
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-color) 100%);
-                color: white;
-                border: none;
-                font-size: 24px;
-                cursor: pointer;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-                z-index: 998;
-                transition: all 0.3s ease;
-            `;
-        scrollButton.onclick = () => {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        };
-        document.body.appendChild(scrollButton);
-      }
-    } else if (scrollButton) {
-      scrollButton.remove();
-      scrollButton = null;
-    }
-  });
-
-  // Auto-save indicator
-  let saveIndicator = null;
-  function showSaveIndicator() {
-    if (!saveIndicator) {
-      saveIndicator = document.createElement("div");
-      saveIndicator.style.cssText = `
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(39, 174, 96, 0.95);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            z-index: 9999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        `;
-      saveIndicator.textContent = "✓ Sauvegardé automatiquement";
-      document.body.appendChild(saveIndicator);
-    }
-
-    saveIndicator.style.opacity = "1";
-    setTimeout(() => {
-      saveIndicator.style.opacity = "0";
-    }, 2000);
-  }
-
-  // Override scheduleAutoSave to show indicator
-  const originalScheduleAutoSave = scheduleAutoSave;
-  scheduleAutoSave = function () {
-    originalScheduleAutoSave();
-    clearTimeout(autoSaveTimer);
-    autoSaveTimer = setTimeout(() => {
-      saveToLocalStorage();
-      showSaveIndicator();
-    }, 2000);
-  };
 }
 
-// PROFILE IMAGE HANDLING
-const profileImage = document.getElementById("profileImage");
-const profileImagePicker = document.getElementById("profileImagePicker");
-const profileImageLabel = document.getElementById("profileImageLabel");
+function initProfileImage() {
+  const container = document.getElementById("profileImageContainer");
+  const img = document.getElementById("profileImage");
+  const picker = document.getElementById("profileImagePicker");
+  const label = document.getElementById("profileImageLabel");
+  const header = document.querySelector(".header");
 
-profileImagePicker.addEventListener("change", function () {
-  const file = this.files[0];
-  if (!file) return;
+  if (!container || !img || !picker || !label) return;
 
-  const reader = new FileReader();
-  reader.onload = function (e) {
-    profileImage.src = e.target.result;
-    profileImage.style.display = "block";
+  // Remove old listeners
+  const newImg = img.cloneNode(true);
+  img.replaceWith(newImg);
 
-    document.querySelector(".header").classList.add("has-profile-image");
+  const newPicker = picker.cloneNode(true);
+  picker.replaceWith(newPicker);
 
-    saveToLocalStorage();
-    showToast("📸 Photo de profil ajoutée", false, 2000);
-  };
-
-  reader.readAsDataURL(file);
-});
-
-// Click on image to remove
-profileImage.addEventListener("click", function () {
-  if (confirm("Supprimer l'image de profil ?")) {
-    profileImage.src = "";
-    profileImage.style.display = "none";
-    profileImagePicker.value = "";
-
-    document.querySelector(".header").classList.remove("has-profile-image");
-
-    saveToLocalStorage();
-    showToast("🗑️ Photo supprimée", false, 2000);
+  function refresh() {
+    // show only when a REAL uploaded image exists
+    if (newImg.src && newImg.src.startsWith("data:image/")) {
+      container.style.display = "block";
+      header.classList.add("has-profile-image");
+      newImg.style.display = "block";
+    } else {
+      container.style.display = "none";
+      header.classList.remove("has-profile-image");
+      newImg.style.display = "none";
+    }
   }
-});
 
+  // Upload image
+  newPicker.addEventListener("change", () => {
+    const file = newPicker.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      newImg.src = e.target.result;
+      refresh();
+      saveToLocalStorage();
+      showToast("📸 Photo ajoutée", false, 1500);
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Delete on click
+  newImg.addEventListener("click", () => {
+    if (confirm("Supprimer la photo ?")) {
+      newImg.src = "";
+      newPicker.value = "";
+      refresh();
+      saveToLocalStorage();
+      showToast("🗑️ Photo supprimée", false, 1500);
+    }
+  });
+
+  refresh();
+}

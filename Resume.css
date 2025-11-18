@@ -359,6 +359,9 @@ body {
 
 .project-content {
   flex: 1;
+  justify-content: flex-start;
+  align-items: flex-start;
+  display: grid;
 }
 
 .education-item {
@@ -956,9 +959,12 @@ body {
   }
 
   .header {
-    background: linear-gradient(135deg, #4a5f7f 0%, #2c3e50 100%) !important;
+    background: linear-gradient(
+      135deg,
+      var(--accent-color) 0%,
+      var(--secondary-color) 100%
+    ) !important;
     -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
   }
 
   .header::before {
@@ -966,13 +972,7 @@ body {
   }
 
   .right-column {
-    background: linear-gradient(
-      135deg,
-      #fafafa 0%,
-      rgba(250, 250, 250, 0.5) 100%
-    ) !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
+    background: var(--sidebar-bg) !important;
   }
 
   .right-column::before {
@@ -981,13 +981,17 @@ body {
   }
 
   .section-title {
-    border-image: linear-gradient(90deg, #3498db 0%, #4a5f7f 100%) !important;
+    border-image: linear-gradient(
+      90deg,
+      var(--primary-color) 0%,
+      var(--accent-color) 100%
+    ) !important;
     border-image-slice: 1 !important;
   }
 
   .section-title::after {
     display: block !important;
-    background: #3498db !important;
+    background: var(--primary-color) !important;
   }
 
   .sidebar-title {
@@ -1036,6 +1040,11 @@ body {
   left: 35px;
   width: 70px;
   height: 70px;
+ display: none;
+}
+
+.header.has-profile-image #profileImageContainer {
+  display: block;
 }
 
 #profileImage {
@@ -1046,6 +1055,7 @@ body {
   border: 2px solid white;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  display: none; /* default hidden */
 }
 
 #profileImageLabel {
@@ -1074,13 +1084,23 @@ body {
 
 @media print {
   #profileImageLabel {
-    display: none !important;
+    display: none;
   }
 }
 
-.header.has-profile-image h1,
-.header.has-profile-image .subtitle {
-  margin-left: 60px;
-  margin-top: 3px;
+.header-text {
   transition: margin-left 0.2s ease;
+}
+
+.header h1,
+.header .subtitle {
+  margin-left: 0;
+}
+
+.header-text {
+    transition: margin-left 0.25s ease;
+}
+
+.header.has-profile-image .header-text {
+    margin-left: 90px;
 }
