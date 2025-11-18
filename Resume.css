@@ -958,15 +958,15 @@ body {
     border-radius: 0;
   }
 
-  .header {
-    background: linear-gradient(
-      135deg,
-      var(--accent-color) 0%,
-      var(--secondary-color) 100%
-    ) !important;
-    -webkit-print-color-adjust: exact !important;
-  }
-
+.header {
+  background: linear-gradient(
+    135deg,
+    var(--accent-color) 0%,
+    var(--secondary-color) 100%
+  ) !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
   .header::before {
     display: block !important;
   }
