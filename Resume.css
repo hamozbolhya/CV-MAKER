@@ -57,9 +57,9 @@ body {
   font-family: "Inter", "Segoe UI", "Calibri", "Arial", sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 20px;
-  -webkit-print-color-adjust: exact;
+  -webkit-color-adjust: exact;
+  -moz-color-adjust: exact;
   print-color-adjust: exact;
-  color-adjust: exact;
   min-height: 100vh;
 }
 
