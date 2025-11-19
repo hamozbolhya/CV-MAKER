@@ -1104,3 +1104,34 @@ body {
 .header.has-profile-image .header-text {
     margin-left: 90px;
 }
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-weight: 500;
+}
+
+.action-btn:hover {
+  background: #1d6fa5;
+  transform: translateY(-1px);
+}
+
+.action-btn .icon {
+  font-size: 18px;
+}
+
+.import-btn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+

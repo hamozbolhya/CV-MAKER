@@ -358,7 +358,26 @@ function closeAllOpenEditors() {
 // Download PDF function
 function downloadPDF() {
   window.print();
-  showToast("📥 Téléchargement PDF en cours...", false, 2000);
+  // 2️⃣ Also save an editable HTML version
+  downloadHTMLVersion();
+
+  showToast("📥 PDF + HTML générés", false, 2500);
+}
+
+function downloadHTMLVersion() {
+  const htmlContent = document.querySelector(".container").innerHTML;
+
+  const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "my_cv_editable.html"; // Name of the exported template
+  a.click();
+
+  URL.revokeObjectURL(url);
+
+  showToast("📄 Version HTML enregistrée", false, 2000);
 }
 
 // Edit functionality with better UX
@@ -502,22 +521,23 @@ function deleteItem(id) {
   if (confirm("Supprimer cet élément ?")) {
     saveState();
     const item = document.querySelector(`[data-id="${id}"]`);
+
     if (item) {
-      // Check if we're deleting the currently editing element
-      if (
-        currentlyEditing &&
-        (item.contains(currentlyEditing) || item === currentlyEditing)
-      ) {
-        currentlyEditing = null;
+      const parentLi =
+        item.closest("li") ||
+        item.closest(".contact-item") ||
+        item.closest(".skills-category");
+
+      if (parentLi) {
+        parentLi.style.opacity = "0";
+        parentLi.style.transform = "scale(0.9)";
+        setTimeout(() => parentLi.remove(), 200);
+      } else {
+        item.remove(); // fallback
       }
 
-      item.style.transform = "scale(0.8)";
-      item.style.opacity = "0";
-      setTimeout(() => {
-        item.remove();
-        scheduleAutoSave();
-      }, 300);
-      showToast("🗑️ Élément supprimé", false, 2000);
+      scheduleAutoSave();
+      showToast("🗑️ Élément supprimé", false, 1500);
     }
   }
 }
@@ -744,32 +764,21 @@ function addAchievement(experienceId) {
 
 function addFreelanceProject() {
   saveState();
-  const freelanceSection = document.querySelector("#experience-3-projects");
+  const freelanceSection = document.getElementById("experience-3-projects");
   const projectCount = freelanceSection.children.length + 1;
-
-  const projectId = `experience-3-project-${projectCount}`;
+  const id = `experience-3-project-${projectCount}`;
 
   const newProject = document.createElement("li");
+  newProject.setAttribute("data-id", id);
   newProject.style.opacity = "0";
 
   newProject.innerHTML = `
-    <div class="project-content">
-
-      <span class="project-name editable"
-            data-id="${projectId}-name">
-        Nouveau projet:
-      </span>
-
-      <span class="project-description editable"
-            data-id="${projectId}-desc">
-        Description
-      </span>
-
+    <div class="project-content" data-id="${id}-content">
+        <span class="project-name editable" data-id="${id}-name" onclick="editField(this)">Nouveau projet:</span>
+        <span class="project-description editable" data-id="${id}-desc" onclick="editField(this)">Description</span>
     </div>
 
-    <button class="delete-btn" 
-            onclick="deleteProject('${projectId}')" 
-            title="Supprimer">×</button>
+    <button class="delete-btn" onclick="deleteItem('${id}')" title="Supprimer">×</button>
   `;
 
   freelanceSection.appendChild(newProject);
@@ -790,36 +799,46 @@ function addProject(experienceId) {
   const projectList = document.getElementById(`${experienceId}-projects`);
   const projectCount = projectList.children.length + 1;
 
+  const projectId = `${experienceId}-project-${projectCount}`;
+
   const newProject = document.createElement("li");
+  newProject.setAttribute("data-id", projectId); // ✅ REQUIRED for delete
   newProject.style.opacity = "0";
 
   newProject.innerHTML = `
-    <div class="project-content">
+    <div class="project-content" data-id="${projectId}-content">
+      
       <span class="project-name editable" 
-            data-id="${experienceId}-project-${projectCount}-name">
+            data-id="${projectId}-name"
+            onclick="editField(this)">
         Nom du projet:
       </span>
 
       <span class="project-description editable"
-            data-id="${experienceId}-project-${projectCount}-description">
+            data-id="${projectId}-description"
+            onclick="editField(this)">
         Description du projet
       </span>
+
     </div>
 
-    <button class="delete-btn" 
-            onclick="deleteProject('${experienceId}-project-${projectCount}')" 
+    <button class="delete-btn"
+            onclick="deleteItem('${projectId}')"
             title="Supprimer">×</button>
   `;
 
   projectList.appendChild(newProject);
 
+  // Animation
   setTimeout(() => {
     newProject.style.transition = "opacity 0.3s ease";
     newProject.style.opacity = "1";
   }, 10);
 
+  // Apply edit & save system
   initEditableElements();
   scheduleAutoSave();
+
   showToast("✓ Projet ajouté", false, 1500);
 }
 
@@ -1199,3 +1218,22 @@ function initProfileImage() {
 
   refresh();
 }
+
+document.getElementById("importHTML").addEventListener("change", function () {
+  const file = this.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const importedHTML = e.target.result;
+    document.querySelector(".container").innerHTML = importedHTML;
+
+    // Reinitialize event listeners after loading
+    initEditableElements();
+    initProfileImage();
+    initDragAndDrop();
+
+    showToast("📂 CV importé avec succès", false, 2500);
+  };
+  reader.readAsText(file);
+});

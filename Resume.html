@@ -61,6 +61,15 @@
         <button class="action-btn reset-btn" onclick="resetCV()">
             <span>🔄</span> Réinitialiser
         </button>
+
+        <input type="file" id="importHTML" accept=".html" style="display: none;">
+
+        <button class="action-btn import-btn" onclick="document.getElementById('importHTML').click()">
+            <span class="icon">🗂️</span>
+            <span>Importer une version</span>
+        </button>
+
+
     </div>
 
     <div class="toast" id="toast"></div>
@@ -159,7 +168,7 @@
                         </div>
 
                         <ul class="project-list" id="experience-1-projects">
-                            <li>
+                            <li data-id="experience-1-project-1">
                                 <div class="project-content">
                                     <span class="project-name editable" data-id="experience-1-project-1-name"
                                         onclick="editField(this)">
@@ -172,10 +181,11 @@
                                     </span>
                                 </div>
 
-                                <button class="delete-btn" onclick="deleteProject('experience-1-project-1')"
+                                <button class="delete-btn" onclick="deleteItem('experience-1-project-1')"
                                     title="Supprimer">×</button>
                             </li>
-                            <li>
+
+                            <li data-id="experience-1-project-2">
                                 <div class="project-content">
                                     <span class="project-name editable" data-id="experience-1-project-2-name"
                                         onclick="editField(this)">
@@ -188,11 +198,11 @@
                                     </span>
                                 </div>
 
-                                <button class="delete-btn" onclick="deleteProject('experience-1-project-2')"
+                                <button class="delete-btn" onclick="deleteItem('experience-1-project-2')"
                                     title="Supprimer">×</button>
                             </li>
 
-                            <li>
+                            <li data-id="experience-1-project-3">
                                 <div class="project-content">
                                     <span class="project-name editable" data-id="experience-1-project-3-name"
                                         onclick="editField(this)">
@@ -205,9 +215,10 @@
                                     </span>
                                 </div>
 
-                                <button class="delete-btn" onclick="deleteProject('experience-1-project-3')"
+                                <button class="delete-btn" onclick="deleteItem('experience-1-project-3')"
                                     title="Supprimer">×</button>
                             </li>
+
 
                         </ul>
                     </div>
@@ -258,8 +269,8 @@
                         </div>
 
                         <ul class="project-list" id="experience-2-projects">
-                            <li>
-                                <div class="project-content">
+                            <li data-id="experience-2-project-1">
+                                <div class="project-content" data-id="experience-2-project-1-content">
                                     <span class="project-name editable" data-id="experience-2-project-1-name"
                                         onclick="editField(this)">
                                         Tookeez:
@@ -271,11 +282,12 @@
                                     </span>
                                 </div>
 
-                                <button class="delete-btn" onclick="deleteProject('experience-2-project-1')"
+                                <button class="delete-btn" onclick="deleteItem('experience-2-project-1')"
                                     title="Supprimer">×</button>
                             </li>
-                            <li>
-                                <div class="project-content">
+
+                            <li data-id="experience-2-project-2">
+                                <div class="project-content" data-id="experience-2-project-2-content">
                                     <span class="project-name editable" data-id="experience-2-project-2-name"
                                         onclick="editField(this)">
                                         TotalEnergies & Shell:
@@ -287,9 +299,10 @@
                                     </span>
                                 </div>
 
-                                <button class="delete-btn" onclick="deleteProject('experience-2-project-2')"
+                                <button class="delete-btn" onclick="deleteItem('experience-2-project-2')"
                                     title="Supprimer">×</button>
                             </li>
+
                         </ul>
                     </div>
 
@@ -306,8 +319,8 @@
                             <ul class="project-list" id="experience-3-projects">
 
                                 <!-- Project 1 -->
-                                <li>
-                                    <div class="project-content">
+                                <li data-id="experience-3-project-1">
+                                    <div class="project-content" data-id="experience-3-project-1-content">
                                         <span class="project-name editable" data-id="experience-3-project-1-name"
                                             onclick="editField(this)">
                                             Service E-commerce:
@@ -319,13 +332,12 @@
                                         </span>
                                     </div>
 
-                                    <button class="delete-btn" onclick="deleteProject('experience-3-project-1')"
+                                    <button class="delete-btn" onclick="deleteItem('experience-3-project-1')"
                                         title="Supprimer">×</button>
                                 </li>
 
-                                <!-- Project 2 -->
-                                <li>
-                                    <div class="project-content">
+                                <li data-id="experience-3-project-2">
+                                    <div class="project-content" data-id="experience-3-project-2-content">
                                         <span class="project-name editable" data-id="experience-3-project-2-name"
                                             onclick="editField(this)">
                                             Contrôle Signature:
@@ -337,7 +349,7 @@
                                         </span>
                                     </div>
 
-                                    <button class="delete-btn" onclick="deleteProject('experience-3-project-2')"
+                                    <button class="delete-btn" onclick="deleteItem('experience-3-project-2')"
                                         title="Supprimer">×</button>
                                 </li>
 
