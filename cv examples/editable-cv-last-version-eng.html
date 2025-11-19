@@ -1,0 +1,524 @@
+
+        <div class="header">
+            <div id="profileImageContainer" style="display: none;">
+                <img id="profileImage" src="" alt="Profile" style="display: none;">
+                <input type="file" id="profileImagePicker" accept="image/*" style="display:none;">
+            </div>
+            <label for="profileImagePicker" id="profileImageLabel">+</label>
+            <div class="header-text">
+                <h1 class="editable" data-id="name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Hamza Boulahia">Hamza Boulahia</h1>
+                <div class="subtitle editable" data-id="title" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Ingénieur Full Stack - React | React Native | Angular | Spring Boot">Full Stack Engineer - React | React Native | Angular | Spring Boot</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="left-column">
+                <div class="section" data-section="intro">
+                    <div class="section-title">
+                        <span class="editable section-title-editable" title="Cliquer pour modifier le titre" data-original-value="À propos">ABOUT</span>
+                        <div class="section-controls">
+                            <span class="drag-handle" title="Déplacer">↕️</span>
+                            <button class="section-control-btn delete-btn" onclick="deleteSection('intro')" title="Supprimer">🗑️</button>
+                        </div>
+                    </div>
+                    <div class="intro-text editable" data-id="intro" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Ingénieur Full Stack avec 4+ ans d'expérience en développement web et mobile. Senior en React, React Native, Angular et Spring Boot. Succès prouvé dans l'amélioration des performances (+30%) et la réduction des bugs (-25%). Spécialisé en solutions innovantes avec intégration IA/OCR pour optimiser les processus métiers. Passionné par l'innovation technologique et résolution de problèmes complexes.">Full Stack Engineer with 4+ years of experience in web and mobile development. Senior expertise in React, React Native, Angular, and Spring Boot. Proven track record in performance improvement (+30%) and bug reduction (-25%). Specialized in innovative solutions with AI/OCR integration to optimize business processes. Passionate about technological innovation and solving complex problems.</div>
+                </div>
+
+                <div class="section" data-section="experience">
+                    <div class="section-title">
+                        <span class="editable section-title-editable" title="Cliquer pour modifier le titre" data-original-value="EXPÉRIENCE PROFESSIONNELLE">PROFESSIONAL EXPERIENCE</span>
+                        <div class="section-controls">
+                            <span class="drag-handle" title="Déplacer">↕️</span>
+                            <button class="section-control-btn delete-btn" onclick="deleteSection('experience')" title="Supprimer">🗑️</button>
+                        </div>
+                    </div>
+
+                    <button class="add-btn" onclick="addExperience()">
+                        <span>+</span> Ajouter une expérience
+                    </button>
+
+                    <div class="experience-item draggable" data-id="experience-1" draggable="true" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+                        <button class="delete-btn" onclick="deleteItem('experience-1')" title="Supprimer">×</button>
+                        <div class="experience-header">
+                            <div class="experience-period editable" data-id="experience-1-period" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Juillet 2022 – Présent">July 2022 – Present</div>
+                            <div class="job-title editable" data-id="experience-1-title" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Présent Ingénieur Full Stack React &amp; React Native Exia Technologies">Full Stack Engineer React &amp; React Native | Java Spring,</div>
+                            <div class="company editable" data-id="experience-1-company" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Procheck Sagma, Casablanca">Exia Technologies(Procheck Sagma, Casablanca)</div>
+                        </div>
+                        <ul class="achievements">
+                            <li>
+                                <div class="editable" data-id="experience-1-achievement-1" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Réduction des bugs critiques de 25% via tests rigoureux et meilleures pratiques de codage">Reduced critical bugs by 25% through rigorous testing and coding best practices</div>
+                                <button class="delete-btn" onclick="deleteItem('experience-1-achievement-1')" title="Supprimer">×</button>
+                            </li>
+                            <li>
+                                <div class="editable" data-id="experience-1-achievement-2" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Déploiement de solutions backend/frontend sur serveurs Linux et Windows">Deployed backend/frontend solutions on Linux and Windows servers</div>
+                                <button class="delete-btn" onclick="deleteItem('experience-1-achievement-2')" title="Supprimer">×</button>
+                            </li>
+                            <li>
+                                <div class="editable" data-id="experience-1-achievement-3" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Optimisation workflows avec Docker et participation active aux réunions clients">Optimized workflows with Docker and active participation in client meetings</div>
+                                <button class="delete-btn" onclick="deleteItem('experience-1-achievement-3')" title="Supprimer">×</button>
+                            </li>
+                        </ul>
+                        <button class="add-btn" onclick="addAchievement('experience-1')">
+                            <span>+</span> Ajouter une réalisation
+                        </button>
+                        <div class="key-label">
+                            <span class="editable" data-id="experience-1-projects-title" title="Cliquer pour éditer" data-original-value="Projets majeurs:">Key Projects:</span>
+
+                            <button class="add-project-btn" onclick="addProject('experience-1')">
+                                + Ajouter un projet
+                            </button>
+                        </div>
+
+                        <ul class="project-list" id="experience-1-projects">
+                            <li data-id="experience-1-project-1">
+                                <div class="project-content">
+                                    <span class="project-name editable" data-id="experience-1-project-1-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Application Mobile &amp; Web Capture (ReactJs | React Native | Spring Boot)">Mobile &amp; Web Capture Application (ReactJs | React Native | Spring Boot)</span>
+                                    <span class="project-description editable" data-id="experience-1-project-1-description" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Développement d'une solution complète (React.js, React Native, Spring Boot) de gestion de remises bancaires (chèques/LCN) avec scan automatisé, OCR par IA pour extraction de données (montant, CMC7, signatures) et détection de fraude, incluant intégration scanner physique et capture mobile avec auto-crop.">Developed a complete solution (React.js, React Native, Spring Boot) for managing bank remittances (checks/LCN) with automated scanning, AI-powered OCR for data extraction (amount, CMC7, signatures) and fraud detection, including physical scanner integration and mobile capture with auto-crop.</span>
+                                </div>
+
+                                <button class="delete-btn" onclick="deleteItem('experience-1-project-1')" title="Supprimer">×</button>
+                            </li>
+
+                            <li data-id="experience-1-project-2">
+                                <div class="project-content">
+                                    <span class="project-name editable" data-id="experience-1-project-2-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Site Web Almabat (React js | NodeJs)">Almabat Website (React js | NodeJs)</span>
+
+                                    <span class="project-description editable" data-id="experience-1-project-2-description" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Création d'un site vitrine responsive pour la vente de batteries automobiles avec présentation catalogue et informations produits.">Created a responsive showcase website for automotive battery sales with catalog presentation and product information.</span>
+                                </div>
+
+                                <button class="delete-btn" onclick="deleteItem('experience-1-project-2')" title="Supprimer">×</button>
+                            </li>
+
+                            <li data-id="experience-1-project-3">
+                                <div class="project-content">
+                                    <span class="project-name editable" data-id="experience-1-project-3-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Application de Recrutement (ReactJs | Spring Boot)">Recruitment Application (ReactJs | Spring Boot)</span>
+
+                                    <span class="project-description editable" data-id="experience-1-project-3-description" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Développement d'une plateforme full-stack en React.js optimisant le processus de recrutement avec gestion des offres d'emploi, candidatures et suivi des candidats.">Developed a full-stack platform in React.js optimizing the recruitment process with job posting management, applications, and candidate tracking.</span>
+                                </div>
+
+                                <button class="delete-btn" onclick="deleteItem('experience-1-project-3')" title="Supprimer">×</button>
+                            </li>
+
+
+                        <li data-id="experience-1-project-4" style="opacity: 1; transition: opacity 0.3s;">
+    <div class="project-content" data-id="experience-1-project-4-content">
+      
+      <span class="project-name editable" data-id="experience-1-project-4-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Contrôle de Signature (React.js)">Controle de Signature (React.js)</span>
+
+      <span class="project-description editable" data-id="experience-1-project-4-description" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Implémentation d'un système intelligent de vérification et validation de signatures sur documents avec comparaison et authentification automatisée.">Implemented an intelligent signature verification and validation system on documents with automated comparison and authentication.</span>
+
+    </div>
+
+    <button class="delete-btn" onclick="deleteItem('experience-1-project-4')" title="Supprimer">×</button>
+  </li><li data-id="experience-1-project-5" style="opacity: 1; transition: opacity 0.3s;">
+    <div class="project-content" data-id="experience-1-project-5-content">
+      
+      <span class="project-name editable" data-id="experience-1-project-5-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Application Logistique INWI (Angular | Spring Boot)">INWI Logistics Application (Angular | Spring Boot)</span>
+
+      <span class="project-description editable" data-id="experience-1-project-5-description" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Conception d'une solution de gestion logistique intégrant OCR pour traitement automatisé des contrats et génération de documents contractuels pour l'opérateur télécom INWI.">Designed a logistics management solution integrating OCR for automated contract processing and generation of contractual documents for INWI telecom operator.</span>
+
+    </div>
+
+    <button class="delete-btn" onclick="deleteItem('experience-1-project-5')" title="Supprimer">×</button>
+  </li><li data-id="experience-1-project-6" style="opacity: 1; transition: opacity 0.3s;">
+    <div class="project-content" data-id="experience-1-project-6-content">
+      
+      <span class="project-name editable" data-id="experience-1-project-6-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="React CaptureModal - Bibliothèque NPM (React Js)">React CaptureModal - NPM Library (React Js)</span>
+
+      <span class="project-description editable" data-id="experience-1-project-6-description" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Développement d'une bibliothèque React open-source de composants modaux personnalisables et réutilisables.">Developed an open-source React library of customizable and reusable modal components.</span>
+
+    </div>
+
+    <button class="delete-btn" onclick="deleteItem('experience-1-project-6')" title="Supprimer">×</button>
+  </li><li data-id="experience-1-project-7" style="opacity: 1; transition: opacity 0.3s;">
+    <div class="project-content" data-id="experience-1-project-7-content">
+      
+      <span class="project-name editable" data-id="experience-1-project-7-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Talon Digital - Application Mobile Full-Stack (React Native | Spring Boot)">Talon Digital - Full-Stack Mobile Application (React Native | Spring Boot)</span>
+
+      <span class="project-description editable" data-id="experience-1-project-7-description" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Création d'une application mobile complète (React Native + Spring Boot) de gestion de remises bancaires avec fonctionnalités avancées de capture, OCR/IA et traitement des valeurs.">Created a complete mobile application (React Native + Spring Boot) for bank remittance management with advanced capture, OCR/AI, and value processing features.</span>
+
+    </div>
+
+    <button class="delete-btn" onclick="deleteItem('experience-1-project-7')" title="Supprimer">×</button>
+  </li><li data-id="experience-1-project-8" style="opacity: 1; transition: opacity 0.3s;">
+    <div class="project-content" data-id="experience-1-project-8-content">
+      
+      <span class="project-name editable" data-id="experience-1-project-8-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="PG Template - Intelligent Moderation Platform (React Js)">PG Template - Intelligent Moderation Platform (React Js)</span>
+
+      <span class="project-description editable" data-id="experience-1-project-8-description" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Développement d'une plateforme web de modération de contenu avec système de validation et contrôle qualité automatisé.">Developed a web content moderation platform with automated validation and quality control system.</span>
+
+    </div>
+
+    <button class="delete-btn" onclick="deleteItem('experience-1-project-8')" title="Supprimer">×</button>
+  </li></ul>
+                    </div>
+
+                    <div class="experience-item draggable" data-id="experience-2" draggable="true" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+                        <button class="delete-btn" onclick="deleteItem('experience-2')" title="Supprimer">×</button>
+                        <div class="experience-header">
+                            <div class="experience-period editable" data-id="experience-2-period" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Avril 2021 – Juillet 2022">April 2021 – July 2022</div>
+                            <div class="job-title editable" data-id="experience-2-title" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Développeur React &amp; React Native &amp; NodeJS">React &amp; React Native &amp; Node.js Developer 2WLS</div>
+                            <div class="company editable" data-id="experience-2-company" onclick="editField(this)" title="Cliquer pour éditer">2WLS,
+                                Casablanca</div>
+                        </div>
+                        <ul class="achievements">
+                            <li>
+                                <div class="editable" data-id="experience-2-achievement-1" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Développement d'applications mobiles/web avec notifications OneSignal et animations avancées">Developed mobile/web applications with OneSignal notifications and advanced animations</div>
+                                <button class="delete-btn" onclick="deleteItem('experience-2-achievement-1')" title="Supprimer">×</button>
+                            </li>
+                            <li>
+                                <div class="editable" data-id="experience-2-achievement-2" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Refonte applications fidélité pour TotalEnergies et Shell, amélioration UX significative">Redesigned loyalty applications for TotalEnergies and Shell, significant UX improvement</div>
+                                <button class="delete-btn" onclick="deleteItem('experience-2-achievement-2')" title="Supprimer">×</button>
+                            </li>
+                            <li>
+                                <div class="editable" data-id="experience-2-achievement-3" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Amélioration efficacité opérationnelle de 40% avec solution Agrobource">Improved operational efficiency by 40% with Agrobource solution</div>
+                                <button class="delete-btn" onclick="deleteItem('experience-2-achievement-3')" title="Supprimer">×</button>
+                            </li>
+                        </ul>
+                        <button class="add-btn" onclick="addAchievement('experience-2')">
+                            <span>+</span> Ajouter une réalisation
+                        </button>
+                        <div class="key-label">
+                            <span class="editable" data-id="experience-2-projects-title" title="Cliquer pour éditer" data-original-value="Projets majeurs:">Key Projects:</span>
+
+                            <button class="add-project-btn" onclick="addProject('experience-2')">
+                                + Ajouter un projet
+                            </button>
+                        </div>
+
+                        <ul class="project-list" id="experience-2-projects">
+                            <li data-id="experience-2-project-1">
+                                <div class="project-content" data-id="experience-2-project-1-content">
+                                    <span class="project-name editable" data-id="experience-2-project-1-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Tookeez - Plateforme de Fidélité Multi-enseignes (React Native)">Tookeez - Multi-Brand Loyalty Platform (React Native)</span>
+
+                                    <span class="project-description editable" data-id="experience-2-project-1-description" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Création d'une application mobile fintech permettant la mutualisation des programmes de fidélité entre commerçants, avec géolocalisation, gestion de points inter-enseignes et interface intuitive.">Created a fintech mobile application enabling the pooling of loyalty programs between merchants, with geolocation, cross-brand point management, and intuitive interface.</span>
+                                </div>
+
+                                <button class="delete-btn" onclick="deleteItem('experience-2-project-1')" title="Supprimer">×</button>
+                            </li>
+
+                            <li data-id="experience-2-project-2">
+                                <div class="project-content" data-id="experience-2-project-2-content">
+                                    <span class="project-name editable" data-id="experience-2-project-2-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Application de Fidélité Shell et TotalEnergies (React Native)">Shell and TotalEnergies Loyalty Applications (React Native)</span>
+
+                                    <span class="project-description editable" data-id="experience-2-project-2-description" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Refonte totale des applications de fidélité Shell et TotalEnergies avec redesign de l'interface, amélioration de l'engagement utilisateur et intégration de nouvelles fonctionnalités de récompenses.">Complete redesign of Shell and TotalEnergies loyalty applications with interface redesign, improved user engagement, and integration of new rewards features.</span>
+                                </div>
+
+                                <button class="delete-btn" onclick="deleteItem('experience-2-project-2')" title="Supprimer">×</button>
+                            </li>
+
+                        <li data-id="experience-2-project-3" style="opacity: 1; transition: opacity 0.3s;">
+    <div class="project-content" data-id="experience-2-project-3-content">
+      
+      <span class="project-name editable" data-id="experience-2-project-3-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Application Instant Win (React Js)">Instant Win Application (React Js)</span>
+
+      <span class="project-description editable" data-id="experience-2-project-3-description" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Développement d'une plateforme cross-platform (Web + Mobile) de gestion de campagnes promotionnelles gamifiées avec système de jeux instantanés, gestion de lots et suivi des participants en temps réel.">Developed a cross-platform (Web + Mobile) gamified promotional campaign management platform with instant game system, prize management, and real-time participant tracking.</span>
+
+    </div>
+
+    <button class="delete-btn" onclick="deleteItem('experience-2-project-3')" title="Supprimer">×</button>
+  </li></ul>
+                    </div>
+
+                    <div class="experience-item draggable" data-id="experience-3" draggable="true" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+                        <button class="delete-btn" onclick="deleteItem('experience-3')" title="Supprimer">×</button>
+                        <div class="experience-header">
+                            <div class="job-title editable" data-id="experience-3-title" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Projets Freelance">Freelance Projects</div>
+                        </div>
+
+                        <!-- Ajoutez une div wrapper autour des projets -->
+                        <div class="projects-container">
+                            <ul class="project-list" id="experience-3-projects">
+
+                                <!-- Project 1 -->
+                                <li data-id="experience-3-project-1">
+                                    <div class="project-content" data-id="experience-3-project-1-content">
+                                        <span class="project-name editable" data-id="experience-3-project-1-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Agrobource - Application Mobile de Gestion Agricole (React Native &amp; Node.js)">Agrobource - Agricultural Management Mobile Application (React Native &amp; Node.js)</span>
+
+                                        <span class="project-description editable" data-id="experience-3-project-1-description" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Développement d'une application mobile complète de gestion et suivi des ressources agricoles, optimisant l'efficacité opérationnelle avec une amélioration de 40% du suivi des exploitations.">Developed a complete mobile application for agricultural resource management and tracking, optimizing operational efficiency with a 40% improvement in farm monitoring.</span>
+                                    </div>
+
+                                    <button class="delete-btn" onclick="deleteItem('experience-3-project-1')" title="Supprimer">×</button>
+                                </li>
+
+                                
+
+                            <li data-id="experience-3-project-2" style="opacity: 1; transition: opacity 0.3s;">
+    <div class="project-content" data-id="experience-3-project-2-content">
+        <span class="project-name editable" data-id="experience-3-project-2-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Site Web 3eafrica.ma | Web Neofast.ma (React.js &amp; Node.js)">3eafrica.ma | Neofast.ma Websites (React.js &amp; Node.js)</span>
+        <span class="project-description editable" data-id="experience-3-project-2-desc" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Développement des sites vitrine full-stack pour l'agence Neofast et 3eafrica avec présentation de services et design responsive.">Developed full-stack showcase websites for Neofast and 3eafrica agencies with service presentation and responsive design.</span>
+    </div>
+
+    <button class="delete-btn" onclick="deleteItem('experience-3-project-2')" title="Supprimer">×</button>
+  </li><li data-id="experience-3-project-3" style="opacity: 1; transition: opacity 0.3s;">
+    <div class="project-content" data-id="experience-3-project-3-content">
+        <span class="project-name editable" data-id="experience-3-project-3-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Plateformes E-commerce Chia.ma &amp; Alga.ma (Angular &amp; Node.js)">Chia.ma &amp; Alga.ma E-commerce Platforms (Angular &amp; Node.js)</span>
+        <span class="project-description editable" data-id="experience-3-project-3-desc" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Création de deux sites marchands full-stack : Chia.ma (produits naturels/bio) et Alga.ma (marketplace généraliste) avec gestion complète des ventes, catalogue produits et paiement sécurisé.">Created two full-stack e-commerce sites: Chia.ma (natural/organic products) and Alga.ma (general marketplace) with complete sales management, product catalog, and secure payment.</span>
+    </div>
+
+    <button class="delete-btn" onclick="deleteItem('experience-3-project-3')" title="Supprimer">×</button>
+  </li><li data-id="experience-3-project-4" style="opacity: 1; transition: opacity 0.3s;">
+    <div class="project-content" data-id="experience-3-project-4-content">
+        <span class="project-name editable" data-id="experience-3-project-4-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Plateforme PACIOLI - Gestion Comptable (React.js, TypeScript &amp; Spring Boot)">PACIOLI Platform - Accounting Management (React.js, TypeScript &amp; Spring Boot)</span>
+        <span class="project-description editable" data-id="experience-3-project-4-desc" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Développement d'une plateforme de gestion comptable automatisée avec upload multi-fichiers, OCR par IA pour extraction de données (factures d'achat/vente, relevés bancaires), conversion multi-devises et calcul de taux de change.">Developed an automated accounting management platform with multi-file upload, AI-powered OCR for data extraction (purchase/sales invoices, bank statements), multi-currency conversion, and exchange rate calculation.</span>
+    </div>
+
+    <button class="delete-btn" onclick="deleteItem('experience-3-project-4')" title="Supprimer">×</button>
+  </li><li data-id="experience-3-project-5" style="opacity: 1; transition: opacity 0.3s;">
+    <div class="project-content" data-id="experience-3-project-5-content">
+        <span class="project-name editable" data-id="experience-3-project-5-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Application Mobile Gestionnaire de Tests RPM Industriels - NARSA Maroc (Expo/React Native)">RPM Industrial Testing Manager Mobile Application - NARSA Morocco (Expo/React Native)</span>
+        <span class="project-description editable" data-id="experience-3-project-5-desc" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Conception d'une application mobile pour la gestion et le suivi des tests de contrôle technique industriel RPM destinée à la NARSA (Agence Nationale de la Sécurité Routière du Maroc).">Designed a mobile application for managing and tracking RPM industrial technical inspection tests for NARSA (National Road Safety Agency of Morocco).</span>
+    </div>
+
+    <button class="delete-btn" onclick="deleteItem('experience-3-project-5')" title="Supprimer">×</button>
+  </li></ul>
+                        </div>
+
+
+                        <button class="add-btn" onclick="addFreelanceProject()">
+                            <span>+</span> Ajouter un projet freelance
+                        </button>
+                    </div>
+                </div>
+
+                <div class="section" data-section="education">
+                    <div class="section-title">
+                        <span class="editable section-title-editable" title="Cliquer pour modifier le titre" data-original-value="Formation">EDUCATION</span>
+                        <div class="section-controls">
+                            <span class="drag-handle" title="Déplacer">↕️</span>
+                            <button class="section-control-btn delete-btn" onclick="deleteSection('education')" title="Supprimer">🗑️</button>
+                        </div>
+                    </div>
+
+                    <button class="add-btn" onclick="addEducation()">
+                        <span>+</span> Ajouter une formation
+                    </button>
+
+                    <div class="education-item draggable" data-id="education-1" draggable="true" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+                        <button class="delete-btn" onclick="deleteItem('education-1')" title="Supprimer">×</button>
+                        <div class="education-year editable" data-id="education-1-year" onclick="editField(this)" title="Cliquer pour éditer">2023 –
+                            2025</div>
+                        <div class="degree editable" data-id="education-1-degree" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Master's Degree                          Big Data &amp; Cloud Computing">Master's Degree - Big Data &amp; Cloud Computing</div>
+                        <div class="school editable" data-id="education-1-school" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="ENSET, Maroc">ENSET, Morocco</div>
+                    </div>
+
+                    <div class="education-item draggable" data-id="education-2" draggable="true" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+                        <button class="delete-btn" onclick="deleteItem('education-2')" title="Supprimer">×</button>
+                        <div class="education-year editable" data-id="education-2-year" onclick="editField(this)" title="Cliquer pour éditer">2022
+                        </div>
+                        <div class="degree editable" data-id="education-2-degree" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Licence en
+                            Ingénierie Logicielle">Bachelor's Degree in Software Engineering</div>
+                        <div class="school editable" data-id="education-2-school" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="ESTEM, Maroc">ESTEM, Morocco</div>
+                    </div>
+
+                    <div class="education-item draggable" data-id="education-3" draggable="true" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+                        <button class="delete-btn" onclick="deleteItem('education-3')" title="Supprimer">×</button>
+                        <div class="education-year editable" data-id="education-3-year" onclick="editField(this)" title="Cliquer pour éditer">2019
+                        </div>
+                        <div class="degree editable" data-id="education-3-degree" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Technicien
+                            Spécialisé - Développement Informatique">Specialized Technician - IT Development</div>
+                        <div class="school editable" data-id="education-3-school" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="NTIC 2 Sidi
+                            Maarouf, Maroc">NTIC 2 Sidi Maarouf, Morocco</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="sidebar-section draggable" data-section="contact" draggable="true" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+                    <button class="delete-btn" onclick="deleteSection('contact')" title="Supprimer">×</button>
+                    <div class="sidebar-title">
+                        <span class="editable section-title-editable" title="Cliquer pour modifier le titre" data-original-value="Contact">CONTACT</span>
+                        <span class="drag-handle editable section-title-editable" title="Cliquer pour modifier le titre">↕️</span>
+                    </div>
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="contact-item" style="opacity: 1; transition: opacity 0.3s;">
+        <div class="contact-item-content">
+            <div class="contact-label editable" data-id="contact-new-5-label" title="Cliquer pour éditer" data-original-value="Nouveau">LOCATION</div>
+            <div class="contact-value editable" data-id="contact-new-5-value" title="Cliquer pour éditer" data-original-value="Valeur">Casablanca, Morocco</div>
+        </div>
+        <button class="delete-btn" onclick="deleteItem('contact-new-5-label')" title="Supprimer">×</button>
+    </div><div class="contact-item" style="opacity: 1; transition: opacity 0.3s;">
+        <div class="contact-item-content">
+            <div class="contact-label editable" data-id="contact-new-2-label" title="Cliquer pour éditer" data-original-value="Nouveau">PHONE</div>
+            <div class="contact-value editable" data-id="contact-new-2-value" title="Cliquer pour éditer" data-original-value="Valeur">+212 659 676 148</div>
+        </div>
+        <button class="delete-btn" onclick="deleteItem('contact-new-2-label')" title="Supprimer">×</button>
+    </div><div class="contact-item" style="opacity: 1; transition: opacity 0.3s;">
+        <div class="contact-item-content">
+            <div class="contact-label editable" data-id="contact-new-3-label" title="Cliquer pour éditer" data-original-value="Nouveau">EMAIL</div>
+            <div class="contact-value editable" data-id="contact-new-3-value" title="Cliquer pour éditer" data-original-value="Valeur">hamzaboulahia.code@gmail.com</div>
+        </div>
+        <button class="delete-btn" onclick="deleteItem('contact-new-3-label')" title="Supprimer">×</button>
+    </div><div class="contact-item" style="opacity: 1; transition: opacity 0.3s;">
+        <div class="contact-item-content">
+            <div class="contact-label editable" data-id="contact-new-4-label" title="Cliquer pour éditer" data-original-value="Nouveau">LINKEDIN</div>
+            <div class="contact-value editable" data-id="contact-new-4-value" title="Cliquer pour éditer" data-original-value="https://linkedin.com/in/boulahia-hamza">https://linkedin.com/in/boulahia-hamza</div>
+        </div>
+        <button class="delete-btn" onclick="deleteItem('contact-new-4-label')" title="Supprimer">×</button>
+    </div><button class="add-btn" onclick="addContact()">
+                        <span>+</span> Ajouter un contact
+                    </button>
+                </div>
+
+                <div class="sidebar-section draggable" data-section="expertise" draggable="true" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+                    <button class="delete-btn" onclick="deleteSection('expertise')" title="Supprimer">×</button>
+                    <div class="sidebar-title">
+                        <span class="editable section-title-editable" title="Cliquer pour modifier le titre" data-original-value="Expertise">EXPERTISE</span>
+                        <span class="drag-handle editable section-title-editable" title="Cliquer pour modifier le titre">↕️</span>
+                    </div>
+                    <ul class="key-skills-list" id="expertise-list">
+                        <li>
+                            <div class="editable" data-id="expertise-1" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Full Stack Development">Full Stack Development</div>
+                            <button class="delete-btn" onclick="deleteItem('expertise-1')" title="Supprimer">×</button>
+                        </li>
+                        <li>
+                            <div class="editable" data-id="expertise-2" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Architecture
+                                Logicielle">Software Architecture</div>
+                            <button class="delete-btn" onclick="deleteItem('expertise-2')" title="Supprimer">×</button>
+                        </li>
+                        <li>
+                            <div class="editable" data-id="expertise-3" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Optimisation
+                                Performance">Performance Optimization</div>
+                            <button class="delete-btn" onclick="deleteItem('expertise-3')" title="Supprimer">×</button>
+                        </li>
+                        <li>
+                            <div class="editable" data-id="expertise-4" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Intégration IA/OCR">AI/OCR Integration</div>
+                            <button class="delete-btn" onclick="deleteItem('expertise-4')" title="Supprimer">×</button>
+                        </li>
+                    <li style="opacity: 1; transition: opacity 0.3s;">
+        <div class="editable" data-id="expertise-5" title="Cliquer pour éditer" data-original-value="Domain-Driven Design (DDD)">Domain-Driven Design (DDD)</div>
+        <button class="delete-btn" onclick="deleteItem('expertise-5')" title="Supprimer">×</button>
+    </li><li style="opacity: 1; transition: opacity 0.3s;">
+        <div class="editable" data-id="expertise-6" title="Cliquer pour éditer" data-original-value="Traitement Temps Réel (WebSockets)">Real-Time Processing (WebSockets)</div>
+        <button class="delete-btn" onclick="deleteItem('expertise-6')" title="Supprimer">×</button>
+    </li><li style="opacity: 1; transition: opacity 0.3s;">
+        <div class="editable" data-id="expertise-7" title="Cliquer pour éditer" data-original-value="Traitement par Lots (Spring Batch)">Batch Processing (Spring Batch)</div>
+        <button class="delete-btn" onclick="deleteItem('expertise-7')" title="Supprimer">×</button>
+    </li><li style="opacity: 1; transition: opacity 0.3s;">
+        <div class="editable" data-id="expertise-8" title="Cliquer pour éditer" data-original-value="Multithreading &amp; Concurrence">Multithreading &amp; Concurrence</div>
+        <button class="delete-btn" onclick="deleteItem('expertise-8')" title="Supprimer">×</button>
+    </li><li style="opacity: 1; transition: opacity 0.3s;">
+        <div class="editable" data-id="expertise-9" title="Cliquer pour éditer" data-original-value="Multithreading &amp; Concurrency">Image Processing &amp; Auto-Cropping</div>
+        <button class="delete-btn" onclick="deleteItem('expertise-9')" title="Supprimer">×</button>
+    </li><li style="opacity: 1; transition: opacity 0.3s;">
+        <div class="editable" data-id="expertise-10" title="Cliquer pour éditer" data-original-value="Problem-Solving Avancé">Advanced Problem-Solving</div>
+        <button class="delete-btn" onclick="deleteItem('expertise-10')" title="Supprimer">×</button>
+    </li><li style="opacity: 1; transition: opacity 0.3s;">
+        <div class="editable" data-id="expertise-11" title="Cliquer pour éditer" data-original-value="Advanced Problem-Solving">Code Review &amp; Mentoring</div>
+        <button class="delete-btn" onclick="deleteItem('expertise-11')" title="Supprimer">×</button>
+    </li></ul>
+                    <button class="add-btn" onclick="addExpertise()">
+                        <span>+</span> Ajouter une compétence
+                    </button>
+                </div>
+
+                <div class="sidebar-section draggable" data-section="technologies" draggable="true" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+                    <button class="delete-btn" onclick="deleteSection('technologies')" title="Supprimer">×</button>
+                    <div class="sidebar-title">
+                        <span class="editable section-title-editable" title="Cliquer pour modifier le titre" data-original-value="Technologies">TECHNOLOGIES</span>
+                        <span class="drag-handle editable section-title-editable" title="Cliquer pour modifier le titre">↕️</span>
+                    </div>
+
+                    
+
+                    
+
+                    
+
+                    <div class="skills-category" style="opacity: 1; transition: opacity 0.3s;">
+        <div class="skills-category-content">
+            <div class="skill-label editable" data-id="tech-new-1-label" title="Cliquer pour éditer" data-original-value="Catégorie">Frontend</div>
+            <div class="skill-value editable" data-id="tech-new-1-value" title="Cliquer pour éditer" data-original-value="ReactJS, React Native, Angular, Next.js, TypeScript">ReactJS, Angular, Next.js, TypeScript</div>
+        </div>
+        <button class="delete-btn" onclick="deleteItem('tech-new-1-label')" title="Supprimer">×</button>
+    </div><div class="skills-category" style="opacity: 1; transition: opacity 0.3s;">
+        <div class="skills-category-content">
+            <div class="skill-label editable" data-id="tech-new-2-label" title="Cliquer pour éditer" data-original-value="Catégorie">Backend</div>
+            <div class="skill-value editable" data-id="tech-new-2-value" title="Cliquer pour éditer" data-original-value="Technologies">Node.js, Java Spring Boot, Spring Batch, WebSockets</div>
+        </div>
+        <button class="delete-btn" onclick="deleteItem('tech-new-2-label')" title="Supprimer">×</button>
+    </div><div class="skills-category" style="opacity: 1; transition: opacity 0.3s;">
+        <div class="skills-category-content">
+            <div class="skill-label editable" data-id="tech-new-3-label" title="Cliquer pour éditer" data-original-value="Catégorie">Mobile</div>
+            <div class="skill-value editable" data-id="tech-new-3-value" title="Cliquer pour éditer" data-original-value="Technologies">React Native, Expo, Cartographie (Maps), Push Notifications (OneSignal), Publication App/Play Store</div>
+        </div>
+        <button class="delete-btn" onclick="deleteItem('tech-new-3-label')" title="Supprimer">×</button>
+    </div><div class="skills-category" style="opacity: 1; transition: opacity 0.3s;">
+        <div class="skills-category-content">
+            <div class="skill-label editable" data-id="tech-new-4-label" title="Cliquer pour éditer" data-original-value="IA &amp; Traitement d'Images">AI &amp; Image Processing</div>
+            <div class="skill-value editable" data-id="tech-new-4-value" title="Cliquer pour éditer" data-original-value="OCR, ScanBot SDK, Auto-Cropping, Détection de Fraudes">OCR, ScanBot SDK, Auto-Cropping, Fraud Detection</div>
+        </div>
+        <button class="delete-btn" onclick="deleteItem('tech-new-4-label')" title="Supprimer">×</button>
+    </div><div class="skills-category" style="opacity: 1; transition: opacity 0.3s;">
+        <div class="skills-category-content">
+            <div class="skill-label editable" data-id="tech-new-5-label" title="Cliquer pour éditer" data-original-value="Base de Données">Databases</div>
+            <div class="skill-value editable" data-id="tech-new-5-value" title="Cliquer pour éditer" data-original-value="SQL, NoSQL, Query Optimization">SQL, NoSQL, Query Optimization</div>
+        </div>
+        <button class="delete-btn" onclick="deleteItem('tech-new-5-label')" title="Supprimer">×</button>
+    </div><div class="skills-category" style="opacity: 1; transition: opacity 0.3s;">
+        <div class="skills-category-content">
+            <div class="skill-label editable" data-id="tech-new-6-label" title="Cliquer pour éditer" data-original-value="Outils &amp; Méthodologies">Tools &amp; Methodologies</div>
+            <div class="skill-value editable" data-id="tech-new-6-value" title="Cliquer pour éditer" data-original-value="Git/GitFlow, DDD, Microservices, Architecture RESTful">Git/GitFlow, DDD, Microservices, RESTful Architecture</div>
+        </div>
+        <button class="delete-btn" onclick="deleteItem('tech-new-6-label')" title="Supprimer">×</button>
+    </div><button class="add-btn" onclick="addTechnology()">
+                        <span>+</span> Ajouter une catégorie
+                    </button>
+                </div>
+
+                <div class="sidebar-section draggable" data-section="languages" draggable="true" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+                    <button class="delete-btn" onclick="deleteSection('languages')" title="Supprimer">×</button>
+                    <div class="sidebar-title">
+                        <span class="editable section-title-editable" title="Cliquer pour modifier le titre" data-original-value="Langues">LANGUAGES</span>
+                        <span class="drag-handle editable section-title-editable" title="Cliquer pour modifier le titre">↕️</span>
+                    </div>
+                    <ul class="languages-list">
+                        <li data-id="language-1">
+                            <span class="editable" data-id="language-1-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Arabe">Arabic</span>
+                            <div class="lang-dots">
+                                <span class="dot filled" data-level="5"></span>
+                                <span class="dot filled" data-level="5"></span>
+                                <span class="dot filled" data-level="5"></span>
+                                <span class="dot filled" data-level="5"></span>
+                                <span class="dot filled" data-level="5"></span>
+                            </div>
+                            <button class="delete-btn" onclick="deleteItem('language-1')" title="Supprimer">×</button>
+                        </li>
+                        <li data-id="language-2">
+                            <span class="editable" data-id="language-2-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Français">French</span>
+                            <div class="lang-dots">
+                                <span class="dot filled" data-level="4"></span>
+                                <span class="dot filled" data-level="4"></span>
+                                <span class="dot filled" data-level="4"></span>
+                                <span class="dot filled" data-level="4"></span>
+                                <span class="dot" data-level="4"></span>
+                            </div>
+                            <button class="delete-btn" onclick="deleteItem('language-2')" title="Supprimer">×</button>
+                        </li>
+                        <li data-id="language-3">
+                            <span class="editable" data-id="language-3-name" onclick="editField(this)" title="Cliquer pour éditer" data-original-value="Anglais">English</span>
+                            <div class="lang-dots">
+                                <span class="dot filled" data-level="3"></span>
+                                <span class="dot filled" data-level="3"></span>
+                                <span class="dot filled" data-level="3"></span>
+                                <span class="dot" data-level="3"></span>
+                                <span class="dot" data-level="3"></span>
+                            </div>
+                            <button class="delete-btn" onclick="deleteItem('language-3')" title="Supprimer">×</button>
+                        </li>
+                    </ul>
+                    <button class="add-btn" onclick="addLanguage()">
+                        <span>+</span> Ajouter une langue
+                    </button>
+                </div>
+            </div>
+        </div>
+    
