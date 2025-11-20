@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV Éditeur - Hamza Boulahia</title>
     <link rel="stylesheet" href="Resume.css">
+    <link rel="stylesheet" href="templete.css">
+    <!-- <link id="dynamicTemplateCSS" rel="stylesheet" href=""> -->
+
 </head>
 
 <body>
@@ -69,7 +72,10 @@
             <span>Importer une version</span>
         </button>
 
-
+       <div class="template-switcher">
+        <button onclick="setTemplate('default')" class="template-btn">Default</button>
+        <button onclick="setTemplate('ats')" class="template-btn">ATS</button>
+    </div>
     </div>
 
     <div class="toast" id="toast"></div>

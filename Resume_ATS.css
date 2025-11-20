@@ -1,0 +1,437 @@
+/* Resume_ATS.css - ATS Optimized Template */
+/* Clean, professional design optimized for both ATS parsing and visual appeal */
+
+.container {
+  max-width: 850px !important;
+  min-height: auto !important;
+  margin: 20px auto !important;
+  background: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  font-family: "Calibri", "Arial", "Helvetica", sans-serif !important;
+  padding: 0 !important;
+}
+
+.container .header {
+  background: #ffffff !important;
+  color: #333333 !important;
+  text-align: left !important;
+  padding: 40px 50px 20px 50px !important;
+  border-bottom: 3px solid var(--primary-color) !important;
+  position: relative;
+}
+
+.container .header::before {
+  display: none !important;
+}
+
+.container .header h1 {
+  font-size: 32px !important;
+  font-weight: 700 !important;
+  color: var(--primary-color) !important;
+  margin-bottom: 8px !important;
+  text-shadow: none !important;
+  letter-spacing: 0.5px !important;
+  line-height: 1.2 !important;
+}
+
+.container .header .subtitle {
+  font-size: 13px !important;
+  color: #666666 !important;
+  font-weight: normal !important;
+  letter-spacing: 0.3px !important;
+  line-height: 1.4 !important;
+}
+
+.container .main-content {
+  display: block !important;
+  grid-template-columns: 1fr !important;
+}
+
+.container .left-column {
+  padding: 30px 50px !important;
+  border-right: none !important;
+  width: 100% !important;
+}
+
+.container .right-column {
+  padding: 30px 50px !important;
+  background: #f8f9fa !important;
+  border-top: 1px solid #e0e0e0 !important;
+  width: 100% !important;
+}
+
+.container .right-column::before {
+  display: none !important;
+}
+
+.container .section {
+  margin-bottom: 25px !important;
+  page-break-inside: avoid;
+}
+
+.container .section-title {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #333333 !important;
+  margin-bottom: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1.5px !important;
+  border-bottom: none !important;
+  border-image: none !important;
+  padding-bottom: 0 !important;
+  padding-bottom: 8px !important;
+  border-bottom: 2px solid #e0e0e0 !important;
+}
+
+.container .section-title::after {
+  display: none !important;
+}
+
+.container .sidebar-section {
+  margin-bottom: 25px !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.container .sidebar-title {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #333333 !important;
+  margin-bottom: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1.5px !important;
+  border-bottom: 2px solid #e0e0e0 !important;
+  border-image: none !important;
+  padding-bottom: 8px !important;
+}
+
+.container .sidebar-title::after {
+  display: none !important;
+}
+
+.container .experience-item,
+.container .education-item {
+  margin-bottom: 20px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.container .experience-item:hover,
+.container .education-item:hover,
+.container .sidebar-section:hover {
+  transform: none !important;
+  border-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.container .experience-header {
+  margin-bottom: 10px !important;
+}
+
+.container .experience-period {
+  font-size: 11px !important;
+  color: #666666 !important;
+  font-weight: 400 !important;
+  margin-bottom: 4px !important;
+  font-style: italic !important;
+}
+
+.container .job-title {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: var(--primary-color) !important;
+  margin-bottom: 3px !important;
+  line-height: 1.3 !important;
+}
+
+.container .company {
+  font-size: 14px !important;
+  color: #333333 !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  margin-bottom: 8px !important;
+}
+
+.container .achievements {
+  list-style: none !important;
+  margin-left: 0 !important;
+  margin-top: 8px !important;
+  padding-left: 0 !important;
+}
+
+.container .achievements li {
+  font-size: 12px !important;
+  color: #444444 !important;
+  line-height: 1.6 !important;
+  margin-bottom: 6px !important;
+  padding-left: 18px !important;
+  position: relative !important;
+}
+
+.container .achievements li:before {
+  content: "•" !important;
+  position: absolute !important;
+  left: 0 !important;
+  color: var(--primary-color) !important;
+  font-weight: 700 !important;
+  display: inline-block !important;
+}
+
+.container .project-list {
+  list-style: none !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.container .project-list li {
+  font-size: 12px !important;
+  color: #444444 !important;
+  line-height: 1.6 !important;
+  margin-bottom: 6px !important;
+  padding-left: 18px !important;
+  position: relative !important;
+}
+
+.container .project-list li:before {
+  content: "•" !important;
+  position: absolute !important;
+  left: 0 !important;
+  color: var(--primary-color) !important;
+  font-weight: 700 !important;
+  display: inline-block !important;
+}
+
+.container .project-name {
+  font-weight: 700 !important;
+  color: #333333 !important;
+}
+
+.container .education-year {
+  font-size: 11px !important;
+  color: #666666 !important;
+  font-weight: 400 !important;
+  margin-bottom: 4px !important;
+  font-style: italic !important;
+}
+
+.container .degree {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: var(--primary-color) !important;
+  margin-bottom: 3px !important;
+  line-height: 1.3 !important;
+}
+
+.container .school {
+  font-size: 13px !important;
+  color: #333333 !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+}
+
+.container .contact-item {
+  margin-bottom: 10px !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.container .contact-label {
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  color: #888888 !important;
+  text-transform: uppercase !important;
+  margin-bottom: 3px !important;
+  letter-spacing: 0.5px !important;
+}
+
+.container .contact-value {
+  font-size: 12px !important;
+  color: #333333 !important;
+  line-height: 1.5 !important;
+}
+
+.container .skills-category {
+  margin-bottom: 12px !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.container .skill-label {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #333333 !important;
+  margin-bottom: 3px !important;
+}
+
+.container .skill-value {
+  font-size: 12px !important;
+  color: #444444 !important;
+  line-height: 1.5 !important;
+}
+
+.container .key-skills-list {
+  list-style: none !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.container .key-skills-list li {
+  font-size: 12px !important;
+  color: #444444 !important;
+  margin-bottom: 6px !important;
+  padding-left: 18px !important;
+  position: relative !important;
+}
+
+.container .key-skills-list li:before {
+  content: "•" !important;
+  position: absolute !important;
+  left: 0 !important;
+  color: var(--primary-color) !important;
+  font-weight: 700 !important;
+  display: inline-block !important;
+}
+
+.container .languages-list li {
+  font-size: 12px !important;
+  color: #444444 !important;
+  margin-bottom: 8px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.container .lang-dots {
+  display: flex !important;
+  gap: 4px !important;
+}
+
+.container .lang-dots .dot {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background: #d0d0d0 !important;
+}
+
+.container .lang-dots .dot.filled {
+  background: var(--primary-color) !important;
+}
+
+/* Hide only CV editing buttons inside the container */
+.container .add-btn,
+.container .add-project-btn,
+.container .delete-btn,
+.container .section-controls .delete-btn,
+.container .drag-handle,
+.container .section-control-btn {
+  display: none !important;
+}
+
+/* Profile image should be hidden in ATS mode */
+.container #profileImageContainer,
+.container #profileImageLabel {
+  display: none !important;
+}
+
+.container .editable:hover {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Ensure good spacing for ATS parsing */
+.container .intro-text {
+  font-size: 12px !important;
+  line-height: 1.6 !important;
+  text-align: left !important;
+  margin-bottom: 0 !important;
+  color: #444444 !important;
+}
+
+.container .key-label {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #333333 !important;
+  margin: 12px 0 8px 0 !important;
+}
+
+/* Remove all animations and transitions from CV content only */
+.container * {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Ensure right column content is visible in ATS mode */
+.container .right-column {
+  display: block !important;
+  visibility: visible !important;
+}
+
+.container .sidebar-section {
+  display: block !important;
+  visibility: visible !important;
+}
+
+@media print {
+  @page {
+    margin: 15mm;
+  }
+
+  /* Hide UI controls */
+  .action-buttons,
+  .color-config,
+  .toggle-config,
+  .toast,
+  .template-switcher {
+    display: none !important;
+  }
+
+  /* Single column layout that actually shows all content */
+  .container .main-content {
+    display: block !important;
+  }
+
+  .container .left-column,
+  .container .right-column {
+    width: 100% !important;
+    display: block !important;
+    padding: 20px 30px !important;
+    border: none !important;
+  }
+
+  .container .right-column {
+    background: #f8f9fa !important;
+    border-top: 1px solid #e0e0e0 !important;
+    margin-top: 0 !important;
+    padding-top: 20px !important;
+  }
+
+  /* Make sure all sidebar sections are visible */
+  .container .sidebar-section {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .container {
+    max-width: 100% !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

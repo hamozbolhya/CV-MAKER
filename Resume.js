@@ -143,6 +143,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 // Color configuration functionality
+// Color configuration functionality
 function updateColors() {
   const root = document.documentElement;
   root.style.setProperty(
@@ -169,7 +170,84 @@ function updateColors() {
     "--text-color",
     document.getElementById("textColor").value
   );
+  
+  // Force a re-render to ensure ATS template updates colors
+  if (localStorage.getItem("cvTemplate") === "ats") {
+    // Temporarily remove and re-add ATS CSS to force refresh
+    const atsCSS = document.getElementById("templateCSS");
+    if (atsCSS) {
+      const href = atsCSS.href;
+      atsCSS.remove();
+      setTimeout(() => {
+        const newLink = document.createElement("link");
+        newLink.rel = "stylesheet";
+        newLink.href = href;
+        newLink.id = "templateCSS";
+        document.head.appendChild(newLink);
+      }, 10);
+    }
+  }
+  
   scheduleAutoSave();
+}
+
+// Apply color presets - updated to work with ATS
+function applyPreset(presetName) {
+  saveState();
+  const presets = {
+    blue: {
+      primary: "#3498db",
+      secondary: "#2c3e50",
+      accent: "#4a5f7f",
+      background: "#ffffff",
+      sidebar: "#fafafa",
+      text: "#444444",
+    },
+    green: {
+      primary: "#27ae60",
+      secondary: "#2c3e50",
+      accent: "#3d7e5a",
+      background: "#ffffff",
+      sidebar: "#f8fcf9",
+      text: "#444444",
+    },
+    red: {
+      primary: "#e74c3c",
+      secondary: "#2c3e50",
+      accent: "#a8433a",
+      background: "#ffffff",
+      sidebar: "#fdf8f7",
+      text: "#444444",
+    },
+    purple: {
+      primary: "#9b59b6",
+      secondary: "#2c3e50",
+      accent: "#7a4b8c",
+      background: "#ffffff",
+      sidebar: "#faf7fc",
+      text: "#444444",
+    },
+    dark: {
+      primary: "#3498db",
+      secondary: "#34495e",
+      accent: "#2c3e50",
+      background: "#2c3e50",
+      sidebar: "#34495e",
+      text: "#ecf0f1",
+    },
+  };
+
+  const preset = presets[presetName];
+  if (preset) {
+    document.getElementById("primaryColor").value = preset.primary;
+    document.getElementById("secondaryColor").value = preset.secondary;
+    document.getElementById("accentColor").value = preset.accent;
+    document.getElementById("backgroundColor").value = preset.background;
+    document.getElementById("sidebarBg").value = preset.sidebar;
+    document.getElementById("textColor").value = preset.text;
+    updateColors();
+    showToast(`🎨 Thème ${presetName} appliqué`, false, 2000);
+  }
 }
 
 // Apply color presets
@@ -1237,3 +1315,55 @@ document.getElementById("importHTML").addEventListener("change", function () {
   };
   reader.readAsText(file);
 });
+
+
+function setTemplate(template) {
+  saveState();
+  localStorage.setItem("cvTemplate", template);
+
+  // Update button states
+  document.querySelectorAll('.template-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  
+  // Find and activate the correct button
+  document.querySelectorAll('.template-btn').forEach(btn => {
+    if (btn.textContent.toLowerCase() === template) {
+      btn.classList.add('active');
+    }
+  });
+
+  if (template === "ats") {
+    enableATSTemplate();
+  } else {
+    enableDefaultTemplate();
+  }
+
+  // Force color refresh after template change
+  setTimeout(updateColors, 100);
+
+  showToast(`🎨 Template "${template}" activé`, false, 2000);
+}
+
+function enableATSTemplate() {
+  removeExistingTemplateCSS();
+  
+  let link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = "Resume_ATS.css";
+  link.id = "templateCSS";
+  document.head.appendChild(link);
+  
+  // Make sure palette stays closed when switching to ATS
+  document.getElementById("colorConfig").style.display = "none";
+}
+
+function enableDefaultTemplate() {
+  removeExistingTemplateCSS();
+  // Colors will automatically apply from the main CSS
+}
+
+function removeExistingTemplateCSS() {
+  const old = document.getElementById("templateCSS");
+  if (old) old.remove();
+}

@@ -1,0 +1,30 @@
+.template-switcher {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 2000;
+}
+
+.template-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: var(--secondary-color);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.template-btn:hover {
+  background: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.template-btn.active {
+  background: var(--primary-color);
+  box-shadow: 0 0 0 2px white, 0 0 0 4px var(--primary-color);
+}
