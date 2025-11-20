@@ -945,6 +945,40 @@ body {
   background: var(--danger-color);
 }
 
+@-moz-document url-prefix() {
+  @media print {
+    .main-content {
+      display: flex !important;
+      flex-direction: row !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: calc(297mm - 80px) !important;
+    }
+    
+    .left-column {
+      flex: 1 !important;
+      border-right: 1px solid var(--border-color) !important;
+      padding: 15px 20px 15px 25px !important;
+      height: auto !important;
+      min-height: calc(297mm - 100px) !important;
+    }
+    
+    .right-column {
+      width: 240px !important;
+      flex-shrink: 0 !important;
+      background: var(--sidebar-bg) !important;
+      padding: 8px 8px 8px 12px !important;
+      height: auto !important;
+      min-height: calc(297mm - 100px) !important;
+    }
+    
+    /* Permettre le contenu de s'étendre naturellement */
+    .section {
+      page-break-inside: auto;
+    }
+  }
+}
+
 @media print {
   body {
     padding: 0;
@@ -958,15 +992,15 @@ body {
     border-radius: 0;
   }
 
-.header {
-  background: linear-gradient(
-    135deg,
-    var(--accent-color) 0%,
-    var(--secondary-color) 100%
-  ) !important;
-  -webkit-print-color-adjust: exact !important;
-  print-color-adjust: exact !important;
-}
+  .header {
+    background: linear-gradient(
+      135deg,
+      var(--accent-color) 0%,
+      var(--secondary-color) 100%
+    ) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
   .header::before {
     display: block !important;
   }
@@ -1040,7 +1074,7 @@ body {
   left: 35px;
   width: 70px;
   height: 70px;
- display: none;
+  display: none;
 }
 
 .header.has-profile-image #profileImageContainer {
@@ -1098,11 +1132,11 @@ body {
 }
 
 .header-text {
-    transition: margin-left 0.25s ease;
+  transition: margin-left 0.25s ease;
 }
 
 .header.has-profile-image .header-text {
-    margin-left: 90px;
+  margin-left: 90px;
 }
 
 .action-btn {
@@ -1132,6 +1166,5 @@ body {
 .import-btn {
   margin-top: 10px;
   margin-bottom: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
-
