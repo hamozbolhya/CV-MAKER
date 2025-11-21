@@ -170,7 +170,7 @@ function updateColors() {
     "--text-color",
     document.getElementById("textColor").value
   );
-  
+
   // Force a re-render to ensure ATS template updates colors
   if (localStorage.getItem("cvTemplate") === "ats") {
     // Temporarily remove and re-add ATS CSS to force refresh
@@ -187,7 +187,7 @@ function updateColors() {
       }, 10);
     }
   }
-  
+
   scheduleAutoSave();
 }
 
@@ -1058,26 +1058,28 @@ function addLanguage() {
   newLanguage.style.opacity = "0";
 
   newLanguage.innerHTML = `
-        <span class="editable" data-id="language-${languageCount}-name">Langue</span>
-        <div class="lang-dots">
-            <span class="dot" data-level="1"></span>
-            <span class="dot" data-level="2"></span>
-            <span class="dot" data-level="3"></span>
-            <span class="dot" data-level="4"></span>
-            <span class="dot" data-level="5"></span>
-        </div>
-        <button class="delete-btn" onclick="deleteItem('language-${languageCount}')" title="Supprimer">×</button>
-    `;
+      <span class="editable" data-id="language-${languageCount}-name" onclick="editField(this)">
+        Nouvelle langue
+      </span>
+
+      <div class="lang-dots level-wrapper">
+        <span class="dot level-text editable">Niveau</span>
+      </div>
+
+      <button class="delete-btn" onclick="deleteItem('language-${languageCount}')" title="Supprimer">
+        ×
+      </button>
+  `;
 
   languagesList.appendChild(newLanguage);
 
+  // Animation faded
   setTimeout(() => {
     newLanguage.style.transition = "opacity 0.3s ease";
     newLanguage.style.opacity = "1";
   }, 10);
 
   initEditableElements();
-
   scheduleAutoSave();
   showToast("✓ Langue ajoutée", false, 1500);
 }
@@ -1316,20 +1318,19 @@ document.getElementById("importHTML").addEventListener("change", function () {
   reader.readAsText(file);
 });
 
-
 function setTemplate(template) {
   saveState();
   localStorage.setItem("cvTemplate", template);
 
   // Update button states
-  document.querySelectorAll('.template-btn').forEach(btn => {
-    btn.classList.remove('active');
+  document.querySelectorAll(".template-btn").forEach((btn) => {
+    btn.classList.remove("active");
   });
-  
+
   // Find and activate the correct button
-  document.querySelectorAll('.template-btn').forEach(btn => {
+  document.querySelectorAll(".template-btn").forEach((btn) => {
     if (btn.textContent.toLowerCase() === template) {
-      btn.classList.add('active');
+      btn.classList.add("active");
     }
   });
 
@@ -1347,14 +1348,23 @@ function setTemplate(template) {
 
 function enableATSTemplate() {
   removeExistingTemplateCSS();
-  
+
   let link = document.createElement("link");
   link.rel = "stylesheet";
   link.href = "Resume_ATS.css";
   link.id = "templateCSS";
   document.head.appendChild(link);
-  
-  // Make sure palette stays closed when switching to ATS
+
+  const container = document.querySelector(".container");
+  container.classList.add("ats-mode");
+
+  // 🧹 CLEAN INLINE STYLES that break the layout
+  document
+    .querySelectorAll(".education-item, .education-year, .degree, .school")
+    .forEach((el) => {
+      el.removeAttribute("style");
+    });
+
   document.getElementById("colorConfig").style.display = "none";
 }
 

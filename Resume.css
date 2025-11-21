@@ -550,42 +550,6 @@ body {
   z-index: 1;
 }
 
-.languages-list {
-  list-style: none;
-}
-
-.languages-list li {
-  font-size: 9.5px;
-  color: var(--text-color);
-  margin-bottom: 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 4px;
-  border-radius: 3px;
-  transition: all 0.2s;
-}
-
-.languages-list li:hover {
-  background-color: rgba(52, 152, 219, 0.05);
-}
-
-.lang-dots {
-  display: flex;
-  gap: 2px;
-}
-
-.dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #ddd;
-  cursor: pointer;
-}
-
-.dot.filled {
-  background: var(--primary-color);
-}
 
 .action-buttons {
   position: fixed;
@@ -696,6 +660,67 @@ body {
 .project-list li:hover .delete-btn {
   opacity: 1;
 }
+
+
+.container .languages-list li {
+  display: flex !important;
+  align-items: center !important;
+  font-size: 12px !important;
+  color: #444 !important;
+  }
+  
+  
+  /* Replace dot block with inline text */
+  .container .lang-dots {
+  display: inline-flex !important;
+  align-items: center !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  }
+  
+  
+  .container .lang-dots .dot.level-text {
+  width: auto !important;
+  height: auto !important;
+  background: none !important;
+  border-radius: 0 !important;
+  color: #333 !important;
+  font-weight: 600 !important;
+  padding: 0 !important;
+  margin-left: 4px !important;
+  }
+  
+  
+  /* Add colon right after language name */
+  .container .languages-list li > span.editable::after {
+  content: ":" !important;
+  margin-left: 4px !important;
+  font-weight: 600 !important;
+  color: #333 !important;
+  }
+  
+  
+  .container .languages-list li .delete-btn {
+  margin-left: 10px !important;
+  flex-shrink: 0 !important;
+  }
+  
+  
+  .container .lang-dots .dot.level-text {
+  width: auto !important;
+  height: auto !important;
+  background: none !important;
+  border-radius: 0 !important;
+  color: #444 !important;
+  font-weight: 600 !important;
+  padding: 0 !important;
+  }
+  
+  
+  /* Ensure delete button stays on the far right */
+  .container .languages-list li .delete-btn {
+  margin-left: 10px !important;
+  }
 
 .add-btn {
   background: linear-gradient(135deg, var(--success-color) 0%, #1e8449 100%);
@@ -823,7 +848,7 @@ body {
   transition: all 0.2s ease;
   border-radius: 4px;
   padding: 2px 5px;
-  flex: 1;
+  /* flex: 1; */
 }
 
 .editable:hover {
