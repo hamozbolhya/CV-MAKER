@@ -301,66 +301,6 @@
   display: inline-block !important;
 }
 
-.container .languages-list li {
-  display: flex !important;
-  align-items: center !important;
-  font-size: 12px !important;
-  color: #444 !important;
-  }
-  
-  
-  /* Replace dot block with inline text */
-  .container .lang-dots {
-  display: inline-flex !important;
-  align-items: center !important;
-  margin-left: 0 !important;
-  padding-left: 0 !important;
-  }
-  
-  
-  .container .lang-dots .dot.level-text {
-  width: auto !important;
-  height: auto !important;
-  background: none !important;
-  border-radius: 0 !important;
-  color: #333 !important;
-  font-weight: 600 !important;
-  padding: 0 !important;
-  margin-left: 4px !important;
-  }
-  
-  
-  /* Add colon right after language name */
-  .container .languages-list li > span.editable::after {
-  content: ":" !important;
-  margin-left: 4px !important;
-  font-weight: 600 !important;
-  color: #333 !important;
-  }
-  
-  
-  .container .languages-list li .delete-btn {
-  margin-left: 10px !important;
-  flex-shrink: 0 !important;
-  }
-  
-  
-  .container .lang-dots .dot.level-text {
-  width: auto !important;
-  height: auto !important;
-  background: none !important;
-  border-radius: 0 !important;
-  color: #444 !important;
-  font-weight: 600 !important;
-  padding: 0 !important;
-  }
-  
-  
-  /* Ensure delete button stays on the far right */
-  .container .languages-list li .delete-btn {
-  margin-left: 10px !important;
-  }
-
 /* Controllers must always be visible in ATS mode */
 .container.ats-mode .add-btn,
 .container.ats-mode .add-project-btn,
