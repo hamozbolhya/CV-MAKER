@@ -72,10 +72,10 @@ body {
   position: relative;
   border-radius: 8px;
   overflow: hidden;
-  animation: fadeInUp 0.5s ease-out;
+  /* animation: fadeInUp 0.5s ease-out; */
 }
 
-@keyframes fadeInUp {
+/* @keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -84,7 +84,7 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
-}
+} */
 
 .header {
   background: linear-gradient(
@@ -112,10 +112,10 @@ body {
     rgba(255, 255, 255, 0.1) 0%,
     transparent 70%
   );
-  animation: pulse 8s ease-in-out infinite;
+  /* animation: pulse 8s ease-in-out infinite; */
 }
 
-@keyframes pulse {
+/* @keyframes pulse {
   0%,
   100% {
     transform: scale(1);
@@ -125,7 +125,7 @@ body {
     transform: scale(1.1);
     opacity: 0.3;
   }
-}
+} */
 
 .header h1 {
   font-size: 32px;
@@ -550,7 +550,6 @@ body {
   z-index: 1;
 }
 
-
 .action-buttons {
   position: fixed;
   top: 20px;
@@ -661,25 +660,22 @@ body {
   opacity: 1;
 }
 
-
 .container .languages-list li {
   display: flex !important;
   align-items: center !important;
   font-size: 12px !important;
   color: #444 !important;
-  }
-  
-  
-  /* Replace dot block with inline text */
-  .container .lang-dots {
+}
+
+/* Replace dot block with inline text */
+.container .lang-dots {
   display: inline-flex !important;
   align-items: center !important;
   margin-left: 0 !important;
   padding-left: 0 !important;
-  }
-  
-  
-  .container .lang-dots .dot.level-text {
+}
+
+.container .lang-dots .dot.level-text {
   width: auto !important;
   height: auto !important;
   background: none !important;
@@ -688,25 +684,22 @@ body {
   font-weight: 600 !important;
   padding: 0 !important;
   margin-left: 4px !important;
-  }
-  
-  
-  /* Add colon right after language name */
-  .container .languages-list li > span.editable::after {
+}
+
+/* Add colon right after language name */
+.container .languages-list li > span.editable::after {
   content: ":" !important;
   margin-left: 4px !important;
   font-weight: 600 !important;
   color: #333 !important;
-  }
-  
-  
-  .container .languages-list li .delete-btn {
+}
+
+.container .languages-list li .delete-btn {
   margin-left: 10px !important;
   flex-shrink: 0 !important;
-  }
-  
-  
-  .container .lang-dots .dot.level-text {
+}
+
+.container .lang-dots .dot.level-text {
   width: auto !important;
   height: auto !important;
   background: none !important;
@@ -714,13 +707,12 @@ body {
   color: #444 !important;
   font-weight: 600 !important;
   padding: 0 !important;
-  }
-  
-  
-  /* Ensure delete button stays on the far right */
-  .container .languages-list li .delete-btn {
+}
+
+/* Ensure delete button stays on the far right */
+.container .languages-list li .delete-btn {
   margin-left: 10px !important;
-  }
+}
 
 .add-btn {
   background: linear-gradient(135deg, var(--success-color) 0%, #1e8449 100%);
@@ -950,7 +942,7 @@ body {
 .toast {
   position: fixed;
   bottom: 20px;
-  left: 50%;
+  left: 10%;
   transform: translateX(-50%);
   background: var(--success-color);
   color: white;
@@ -979,7 +971,7 @@ body {
       height: auto !important;
       min-height: calc(297mm - 80px) !important;
     }
-    
+
     .left-column {
       flex: 1 !important;
       border-right: 1px solid var(--border-color) !important;
@@ -987,7 +979,7 @@ body {
       height: auto !important;
       min-height: calc(297mm - 100px) !important;
     }
-    
+
     .right-column {
       width: 240px !important;
       flex-shrink: 0 !important;
@@ -996,11 +988,18 @@ body {
       height: auto !important;
       min-height: calc(297mm - 100px) !important;
     }
-    
+
     /* Permettre le contenu de s'étendre naturellement */
     .section {
       page-break-inside: auto;
     }
+  }
+}
+
+@media print {
+  .ats-mode * {
+    all: unset !important;
+    display: revert !important;
   }
 }
 
@@ -1199,4 +1198,3 @@ body {
   box-shadow: 0 0 0 2px white, 0 0 0 4px var(--primary-color);
   transform: translateY(-2px);
 }
-

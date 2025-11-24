@@ -17,7 +17,7 @@
   background: #ffffff !important;
   color: #333333 !important;
   text-align: left !important;
-  padding: 40px 50px 20px 50px !important;
+  /* padding: 40px 50px 20px 50px !important; */
   border-bottom: 3px solid var(--primary-color) !important;
   position: relative;
 }
@@ -30,7 +30,7 @@
   font-size: 32px !important;
   font-weight: 700 !important;
   color: var(--primary-color) !important;
-  margin-bottom: 8px !important;
+  margin-bottom: 6px !important;
   text-shadow: none !important;
   letter-spacing: 0.5px !important;
   line-height: 1.2 !important;
@@ -41,7 +41,7 @@
   color: #666666 !important;
   font-weight: normal !important;
   letter-spacing: 0.3px !important;
-  line-height: 1.4 !important;
+  line-height: 1.2 !important;
 }
 
 .container .main-content {
@@ -357,18 +357,32 @@
   visibility: visible !important;
 }
 
-@media print {
-  .page-break-before {
-    page-break-before: always;
-    break-before: always;
-    height: 2mm !important; /* this becomes your margin */
-  }
-}
 
 @media print {
   @page {
     size: A4;
-    margin: 0 !important; /* Remove browser margins */
+    margin-top: 1mm !important;
+    margin-bottom: 1mm !important;
+  }
+  
+  .subtitle {
+    margin-bottom: 10px !important;
+
+  }
+
+  .action-buttons,
+  .color-config,
+  .toggle-config,
+  .add-btn,
+  .add-project-btn,
+  .delete-btn,
+  .section-control-btn,
+  .drag-handle {
+    display: none !important;
+  }
+
+  .toast {
+    display: none !important;
   }
 
   html,
@@ -377,41 +391,35 @@
     margin: 0 !important;
   }
 
-  /* Remove ALL extra spacing around the resume */
   .container {
     margin: 0 !important;
-    padding: 0 !important;
-    max-width: 210mm !important;
-    min-height: 297mm !important;
+    padding: 3mm !important;
+    /* max-width: 210mm !important; */
     box-shadow: none !important;
     border: none !important;
   }
 
-  /* Remove header padding on print */
   .container .header {
-    padding: 10px 20px !important;
-    margin: 0 !important;
+    /* padding: 10px 20px !important; */
+    margin-top: 10 !important;
+    margin-bottom: 10 !important;
   }
 
-  /* Remove left-right padding */
   .container .left-column,
   .container .right-column {
-    padding: 10px 20px !important;
+    padding: 12px 2px !important;
     margin: 0 !important;
   }
 
-  /* Remove spacing around sections */
   .container .section {
-    margin: 8px 0 !important;
+    margin: 12px 0 !important;
     page-break-inside: auto !important;
   }
 
-  /* Remove forced space under right column */
   .container .right-column {
     margin-bottom: 0 !important;
   }
 
-  /* Force content to start at the absolute top */
   .container .main-content {
     display: block !important;
     padding: 0 !important;
@@ -427,7 +435,6 @@
     display: none !important;
     visibility: hidden !important;
   }
-  /* Remove any hidden padding created by scaling */
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
@@ -524,3 +531,31 @@
     opacity: 0 !important;
   }
 }
+
+/* 🛡️ Safe reset: Remove visual effects from Resume.css during ATS print */
+@media print {
+  .ats-mode {
+    background: white !important;
+    box-shadow: none !important;
+  }
+
+  .ats-mode .header,
+  .ats-mode .sidebar-section,
+  .ats-mode .experience-item,
+  .ats-mode .education-item {
+    background: white !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* Remove only animations/gradients/shadows coming from Resume.css */
+  .ats-mode * {
+    animation: none !important;
+    transition: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    background-image: none !important;
+    backdrop-filter: none !important;
+  }
+}
+
